@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./styles/App.css";
+import Navbar from "./components/Navbar";
+import BitcoinBalance from "./components/BitcoinBalance";
+import TransactionsTable from "./components/TransactionsTable";
+import TransactionSummary from "./components/TransactionSummary";
 
-function App() {
+const transactions = [
+  // Add your transactions data here
+];
+
+const summary = {
+  totalTransactions: 513,
+  totalReceived: "21546 BTC",
+  totalSent: "21546 BTC",
+};
+
+const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar />
+      <BitcoinBalance />
+      <TransactionSummary summary={summary} />
+      <TransactionsTable transactions={transactions} />
     </div>
   );
-}
+};
 
 export default App;
