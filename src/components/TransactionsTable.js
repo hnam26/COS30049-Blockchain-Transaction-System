@@ -18,7 +18,12 @@ const TransactionsTable = ({ transactions }) => {
           <tr key={index}>
             <td>{transaction.transactionId}</td>
             <td>{transaction.type}</td>
-            <td>{transaction.amount}</td>
+            <td>
+              {/* Display both expense and income in the "Amount" field */}
+              Expense: {transaction.expense}
+              <br />
+              Income: {transaction.income}
+            </td>
             <td>{transaction.fee}</td>
             <td>{transaction.status}</td>
             <td>{transaction.date}</td>
