@@ -27,8 +27,8 @@ const App = () => {
       <Outlet />
       {/* <BitcoinBalance /> */}
       {/* <BarChart /> */}
-      <TransactionSummary summary={summary} />
-      <TransactionsTable transactions={transactions} />
+      {/* <TransactionSummary summary={summary} />
+      <TransactionsTable transactions={transactions} /> */}
     </div>
   );
 };

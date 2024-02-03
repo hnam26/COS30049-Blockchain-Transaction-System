@@ -2,15 +2,12 @@ import React from "react";
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS } from "chart.js/auto";
 import "../styles/Chart.css";
-import { getRevenue } from "../data/revenueData";
 
 const BarChart = ({ props }) => {
-    const revenueData = props.revenue;
+    const transHistory = props;
 
-    var expenseAvg = (revenueData.reduce((acc, data) => acc + data.expense, 0)) / revenueData.length;
-    var incomeAvg = (revenueData.reduce((acc, data) => acc + data.income, 0)) / revenueData.length;
-
-
+    const expenseAvg = transHistory.expense.reduce((acc, expense) => acc + expense, 0) / transHistory.expense.length;
+    const incomeAvg = transHistory.income.reduce((acc, income) => acc + income, 0) / transHistory.income.length;
     const options = {
         responsive: true,
         plugins: {
@@ -52,22 +49,22 @@ const BarChart = ({ props }) => {
         }
     };
     const data = {
-        labels: revenueData.map((data) => data.date),
+        labels: transHistory.date,
         datasets: [{
             label: "Expense",
-            data: revenueData.map((data) => data.expense),
+            data: transHistory.expense,
             backgroundColor: "#F6D6D6",
             order: "1",
         },
         {
             label: "Income",
-            data: revenueData.map((data) => data.income),
+            data: transHistory.income,
             backgroundColor: "#B7E5B4",
             order: "1",
         },
         {
             label: `Average Expense`,
-            data: Array(revenueData.length).fill(expenseAvg),
+            data: Array(transHistory.date.length).fill(expenseAvg),
             type: "line",
             borderDash: [5, 5],
             borderColor: "#FF8F8F",
@@ -77,7 +74,7 @@ const BarChart = ({ props }) => {
         },
         {
             label: `Average Income`,
-            data: Array(revenueData.length).fill(incomeAvg),
+            data: Array(transHistory.date.length).fill(incomeAvg),
             type: "line",
             borderDash: [5, 5],
             borderColor: "#86A789",

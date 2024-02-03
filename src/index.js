@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import './styles/index.css';
 import App from './App';
-import Revenue from './components/Revenue';
+import Account from './components/Account';
 import reportWebVitals from './reportWebVitals';
 import { Route, Routes } from 'react-router';
 
@@ -13,7 +13,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<App />}>
-          <Route path=':id' element={<Revenue />} />
+          <Route path=':id' element={<Account />} />
         </Route>
       </Routes>
     </BrowserRouter>
