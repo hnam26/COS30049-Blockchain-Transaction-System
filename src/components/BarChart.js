@@ -11,13 +11,13 @@ const BarChart = ({ props }) => {
             legend: {
                 position: 'bottom',
             },
-            title: {
-                display: true,
-                text: 'All transactions',
-                font: {
-                    size: "20",
-                }
-            },
+            // title: {
+            //     display: true,
+            //     text: 'All transactions',
+            //     font: {
+            //         size: "20",
+            //     }
+            // },
         },
         scales: {
             y: {
@@ -88,14 +88,16 @@ const BarChart = ({ props }) => {
         setChartData(data);
     }, [props]);
     return (
-        <div className="chartTransaction">
-            {chartData && (
-                <Bar
-                    data={chartData}
-                    options={options}
-                />
-            )}
-        </div >
+        <>
+            <div className="chartTransaction">
+                {chartData && (
+                    <Bar
+                        data={chartData}
+                        options={options}
+                    />
+                )}
+            </div >
+        </>
     );
 };
 

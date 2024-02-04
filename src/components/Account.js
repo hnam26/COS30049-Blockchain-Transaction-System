@@ -45,9 +45,10 @@ const Account = () => {
                     </div>
                     {showWalletContent ? (
 
-                        <div style={{ width: "95%", padding: "0px 80px" }}>
+                        <div style={{ width: "95%" }}>
                             <div className="chart-summary-frame">
                                 <div className="bar">
+                                    <h2>All transactions</h2>
                                     <BarChart props={data.transHistory} />
                                 </div>
                                 <div className="summary">
