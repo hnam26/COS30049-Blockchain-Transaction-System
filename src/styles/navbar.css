@@ -1,4 +1,4 @@
-/* Default styles for navbar */
+/* Default styles for the navbar container */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -10,25 +10,28 @@
     position: relative;
 }
 
+/* Styles for the logo within the navbar */
 .navbar-logo img {
     width: 50px;
     margin-left: 2em;
     height: 50px;
 }
 
+/* Styles for the right side of the navbar */
 .right-side {
     display: flex;
     align-items: center;
 }
 
+/* Styles for the navbar links container */
 .navbar-links {
     display: flex;
     list-style-type: none;
-
     transform-origin: top;
     transition: transform 0.3s ease-in-out;
 }
 
+/* Styles for individual navbar links */
 .navbar-links li {
     margin-right: 2em;
     cursor: pointer;
@@ -39,15 +42,17 @@
     transition: 0.4s ease-out;
 }
 
+/* Hover effect for last navbar link */
 .navbar-links li:last-child:hover {
     border-bottom: 1px solid transparent;
 }
 
+/* Hover effect for navbar links */
 .navbar-links li:hover {
     border-bottom: #ed1c2e 1px solid;
 }
 
-
+/* Styles for anchor links within navbar links */
 .navbar-links li a {
     text-decoration: none;
     color: black;
@@ -58,6 +63,7 @@
     height: 100%;
 }
 
+/* Styles for the sign-in button */
 .sign-in-button {
     background-color: #ed1c2e;
     color: white;
@@ -68,9 +74,9 @@
     font-size: 16px;
     transition: 0.4s ease-out;
     border: 1px solid transparent;
-    /* Add a transparent border */
 }
 
+/* Hover effect for the sign-in button */
 .sign-in-button:hover {
     background-color: #fff;
     color: #ed1c2e;
@@ -79,6 +85,7 @@
 
 /* Responsive Styles */
 @media (max-width: 768px) {
+    /* Styles for navbar links in mobile view */
     .navbar-links {
         flex-direction: column;
         padding: 0;
@@ -94,19 +101,23 @@
         transform: scaleY(0);
     }
 
+    /* Styles for individual navbar links in mobile view */
     .navbar-links li {
         margin: 0;
         padding: 10px;
     }
 
+    /* Hover effect for last navbar link in mobile view */
     .navbar-links li:hover {
         border-bottom: 1px solid transparent;
     }
 
+    /* Display navbar links when navbar is open in mobile view */
     .navbar.open .navbar-links {
         transform: scaleY(1);
     }
 
+    /* Styles for the navbar toggle button in mobile view */
     .navbar-toggle {
         display: flex;
         flex-direction: column;
@@ -114,6 +125,7 @@
         margin-right: 1rem;
     }
 
+    /* Styles for the bars in the navbar toggle button */
     .navbar-toggle .bar {
         width: 25px;
         height: 3px;
@@ -122,19 +134,22 @@
         transition: 0.4s;
     }
 
+    /* Animation for the first bar in the navbar toggle button */
     .navbar-toggle.open .bar:nth-child(1) {
         transform: rotate(-45deg) translate(-5px, 6px);
     }
 
+    /* Animation for the second bar in the navbar toggle button */
     .navbar-toggle.open .bar:nth-child(2) {
         opacity: 0;
     }
 
+    /* Animation for the third bar in the navbar toggle button */
     .navbar-toggle.open .bar:nth-child(3) {
         transform: rotate(45deg) translate(-5px, -6px);
     }
 
-    /* Add styles for the sign-in button when it's in the dropdown */
+    /* Styles for the sign-in button in mobile view */
     .navbar-links li button.sign-in-button {
         margin: 1em 0;
         width: 80%;

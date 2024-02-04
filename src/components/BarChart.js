@@ -3,7 +3,9 @@ import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS } from "chart.js/auto";
 import "../styles/chart.css";
 
+// BarChart component
 const BarChart = ({ props }) => {
+    // Chart options
     const options = {
         responsive: true,
         maintainAspectRatio: false,
@@ -35,18 +37,20 @@ const BarChart = ({ props }) => {
                 beginAtZero: true,
                 padding: { top: 30, left: 0, right: 0, bottom: 0 },
             }
-
         }
     };
 
-
+    // State for chart data
     const [chartData, setChartData] = useState(null);
 
+    // useEffect to update chart data
     useEffect(() => {
         const transHistory = props;
+        // Calculate average expense and income
         const expenseAvg = transHistory.expense.reduce((acc, expense) => acc + expense, 0) / transHistory.expense.length;
         const incomeAvg = transHistory.income.reduce((acc, income) => acc + income, 0) / transHistory.income.length;
 
+        // Chart data
         const data = {
             labels: transHistory.date,
             datasets: [{
@@ -82,13 +86,16 @@ const BarChart = ({ props }) => {
                 pointRadius: 0,
             },
             ],
-
         };
 
+        // Set chart data
         setChartData(data);
     }, [props]);
+
+    // Render BarChart component
     return (
         <div className="chartTransaction">
+            {/* Render Bar component with chart data and options */}
             {chartData && (
                 <Bar
                     data={chartData}
@@ -99,4 +106,5 @@ const BarChart = ({ props }) => {
     );
 };
 
+// Export BarChart component
 export default BarChart;

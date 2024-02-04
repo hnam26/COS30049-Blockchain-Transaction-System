@@ -26,16 +26,18 @@ form {
   margin: 1em;
 }
 
+/* Styles for input elements */
 input,
 #search-btn {
   height: var(--height);
-  font-family: var(--font-fam);
+  /* font-family: var(--font-fam); */
   border: 0;
   color: var(--color-dark);
   font-size: 1em;
   padding: 5px 1em;
 }
 
+/* Styles for general input */
 input {
   width: 100%;
   outline: none;
@@ -46,6 +48,7 @@ input {
   box-shadow: 0 0 5px var(--color-dark);
 }
 
+/* Styles for search input */
 input[type="search"] {
   padding: 10px;
   outline: 0;
@@ -58,6 +61,7 @@ input[type="search"] {
   position: relative;
 }
 
+/* Styles for the search button */
 #search-btn {
   display: none;
   position: absolute;
@@ -77,6 +81,7 @@ input[type="search"] {
   animation: fadeInAnimation var(--dur);
 }
 
+/* Styles for input when not empty */
 input:not(:placeholder-shown) {
   border-radius: var(--rad);
   width: calc(100%);
@@ -88,7 +93,7 @@ input:not(:placeholder-shown)+#search-btn {
   display: block;
 }
 
-/* Hide label element */
+/* Styles to hide the label element */
 label {
   position: absolute;
   clip: rect(1px, 1px, 1px, 1px);
