@@ -32,7 +32,7 @@ class SearchBar extends React.Component {
                     onChange={this.handleSearchTermChange}
                     placeholder="Search wallet address"
                 />
-                <button type="submit" id='search-btn'>Search</button>
+                <button type="submit">Search</button>
             </form>
         );
     }
