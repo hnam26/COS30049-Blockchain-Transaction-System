@@ -1,9 +1,10 @@
+/* Define custom font */
 @font-face {
   font-family: 'Barlow';
   src: url('../assets/fonts/barlow/Barlow-Medium.ttf') format('truetype');
 }
 
-/* Vars  */
+/* Variables */
 :root {
   --rad: 20px;
   --dur: .3s;
@@ -16,89 +17,95 @@
   --bez: cubic-bezier(0, 0, 0.43, 1.49);
 }
 
+/* Form styles */
 form {
-    position: relative;
-    width: 30rem;
-    background: var(--color-light);
-    border-radius: var(--rad);
-    margin: 1em
-  }
-  input, #search-btn {
-    height: var(--height);
-    font-family: var(--font-fam);
-    border: 0;
-    color: var(--color-dark);
-    font-size: 1em;
-    padding: 0 1em;
+  position: relative;
+  width: 40%;
+  background: var(--color-light);
+  border-radius: var(--rad);
+  margin: 1em;
+}
+
+input,
+#search-btn {
+  height: var(--height);
+  font-family: var(--font-fam);
+  border: 0;
+  color: var(--color-dark);
+  font-size: 1em;
+  padding: 5px 1em;
+}
+
+input {
+  width: 100%;
+  outline: none;
+  background: var(--color-light);
+  border-radius: var(--rad);
+  border: #DEDEDE solid 1px;
+  appearance: none;
+  box-shadow: 0 0 5px var(--color-dark);
+}
+
+input[type="search"] {
+  padding: 10px;
+  outline: 0;
+  width: 100%;
+  background: var(--color-light);
+  padding: 0 1.6rem;
+  border-radius: var(--rad);
+  appearance: none;
+  z-index: 1;
+  position: relative;
+}
+
+#search-btn {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: -30px;
+  width: var(--btn-width);
+  font-weight: lighter;
+  background: var(--color-brand);
+  color: var(--color-light);
+  border-radius: var(--rad);
+  font-size: 1em;
+  padding-left: 1.05em;
+  height: 80%;
+  margin-top: .2rem;
+  transition-duration: var(--dur);
+  transition-property: display;
+  animation: fadeInAnimation var(--dur);
+}
+
+input:not(:placeholder-shown) {
+  border-radius: var(--rad);
+  width: calc(100%);
+  outline: none;
+}
+
+/* Show search button when input is not empty */
+input:not(:placeholder-shown)+#search-btn {
+  display: block;
+}
+
+/* Hide label element */
+label {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0;
+  border: 0;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+
+/* Animation for search button */
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
   }
 
-  input {
-    width: 100%;
-    outline: none;
-    background: var(--color-light);
-    border-radius: var(--rad);
-    border: #DEDEDE solid 1px;
-    appearance: none;
-    box-shadow: 0 0 5px var(--color-dark);
-
+  100% {
+    opacity: 1;
   }
-  
-  input[type="search"] {
-    outline: 0; 
-    width: 100%;
-    background: var(--color-light);
-    padding: 0 1.6rem;
-    border-radius: var(--rad);
-    appearance: none;
-    z-index: 1;
-    position: relative;
-  }
-
-  #search-btn {
-    display: none; 
-    position: absolute;
-    top: 0;
-    right: -30px;
-    width: var(--btn-width);
-    font-weight: lighter;
-    background: var(--color-brand);
-    color: var(--color-light);
-    border-radius: var(--rad);
-    font-size: 1em;
-    padding-left: 1.05em;
-    height: 80%;
-    margin-top: .2rem;
-    transition-duration: var(--dur);
-    transition-property: display;
-    animation: fadeInAnimation var(--dur);
-  }
-
-  input:not(:placeholder-shown) {
-    border-radius: var(--rad) ;
-    width: calc(100%);
-    outline: none;
-    + #search-btn {
-      display: block;
-    }
-  }
-
-  
-
-  label {
-    position: absolute;
-    clip: rect(1px, 1px, 1px, 1px);
-    padding: 0;
-    border: 0;
-    height: 1px;
-    width: 1px;
-    overflow: hidden;
-  }
-  
-  @keyframes fadeInAnimation {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
 }

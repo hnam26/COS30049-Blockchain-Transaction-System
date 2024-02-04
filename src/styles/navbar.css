@@ -8,7 +8,7 @@
     border-bottom: #D6D6D6 1px solid;
 }
 
-img {
+.navbar-logo img {
     width: 50px;
     margin-left: 2em;
     height: 50px;
@@ -39,12 +39,10 @@ img {
     border-radius: 10px;
     cursor: pointer;
     font-size: 16px;
-  }
-  
-  .sign-in-button:hover {
+}
+
+.sign-in-button:hover {
     background-color: #fff;
     color: #ED1C2E;
     border: #ED1C2E 1px solid;
-  }
-
-  
+}
