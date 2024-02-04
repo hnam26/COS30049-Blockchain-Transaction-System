@@ -7,7 +7,7 @@ import TransactionGraph from "./TransactionGraph";
 import UserInfo from "./UserInfo";
 import { calculateExpensesAndIncomes, findNodesByWalletAddress, transactionData, getTransactionDetails, getTransactionSummary } from "../data/transactionData";
 import HandleRevenueError from "./ErrorHandler";
-import AccountCss from "../styles/AccountCss.css";
+import accountcss from "../styles/accountcss.css";
 const Account = () => {
 
     const params = useParams();
@@ -25,14 +25,14 @@ const Account = () => {
             const fetchedSummary = getTransactionSummary(params.id); // Fetch summary data
             const fetchedTransactions = getTransactionDetails(params.id, -1); // Fetch transactions data
 
-            // Update your state variables with the new data
+            // Update state variables with the new data
             setData({ node: fetchedNode, transHistory: fetchedTransHistory, summary: fetchedSummary, transactions: fetchedTransactions });
         };
 
         fetchData();
     }, [params.id]);
 
-
+    // Render the JSX based on the fetched data
     return (
         <>
             {data.node ? (
@@ -63,6 +63,7 @@ const Account = () => {
                     )}
                 </>
             ) : (
+                // Render error handler component if node data is not available
                 <HandleRevenueError />
             )}
         </>
