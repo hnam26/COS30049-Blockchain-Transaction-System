@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import avatar from "../assets/images/avatar.png";
-import UserInfoCss from "../styles/UserInfoCss.css";
+import UserInfoCss from "../styles/userinfocss.css";
 const UserInfo = ({ props: { nodes, summary } }) => {
     const node = nodes[0];
     const [showPopup, setShowPopup] = useState(false);

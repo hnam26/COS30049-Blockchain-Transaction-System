@@ -1,5 +1,5 @@
 import React from "react";
-import Summary from "../styles/Summary.css";
+import Summary from "../styles/summary.css";
 const TransactionSummary = ({ summary }) => {
   return (
     <section className="transaction-summary">
