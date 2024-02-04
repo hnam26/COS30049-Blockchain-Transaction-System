@@ -83,7 +83,8 @@
     border: #ed1c2e 1px solid;
 }
 
-/* Responsive Styles */
+
+/* Responsive Styles for Navbar */
 @media (max-width: 768px) {
     /* Styles for navbar links in mobile view */
     .navbar-links {
@@ -107,17 +108,17 @@
         padding: 10px;
     }
 
-    /* Hover effect for last navbar link in mobile view */
+    /* Styles for navbar links on hover in mobile view */
     .navbar-links li:hover {
         border-bottom: 1px solid transparent;
     }
 
-    /* Display navbar links when navbar is open in mobile view */
+    /* Styles for open navbar links in mobile view */
     .navbar.open .navbar-links {
         transform: scaleY(1);
     }
 
-    /* Styles for the navbar toggle button in mobile view */
+    /* Styles for navbar toggle button in mobile view */
     .navbar-toggle {
         display: flex;
         flex-direction: column;
@@ -125,7 +126,7 @@
         margin-right: 1rem;
     }
 
-    /* Styles for the bars in the navbar toggle button */
+    /* Styles for individual bars in navbar toggle button */
     .navbar-toggle .bar {
         width: 25px;
         height: 3px;
@@ -134,24 +135,23 @@
         transition: 0.4s;
     }
 
-    /* Animation for the first bar in the navbar toggle button */
+    /* Styles for rotated bar in navbar toggle button when open */
     .navbar-toggle.open .bar:nth-child(1) {
-        transform: rotate(-45deg) translate(-5px, 6px);
+        transform: rotate(-45deg) translate(-8px, 10px);
     }
 
-    /* Animation for the second bar in the navbar toggle button */
+    /* Styles for hidden middle bar in navbar toggle button when open */
     .navbar-toggle.open .bar:nth-child(2) {
         opacity: 0;
     }
 
-    /* Animation for the third bar in the navbar toggle button */
+    /* Styles for rotated bar in navbar toggle button when open */
     .navbar-toggle.open .bar:nth-child(3) {
-        transform: rotate(45deg) translate(-5px, -6px);
+        transform: rotate(45deg) translate(-6px, -8px);
     }
 
-    /* Styles for the sign-in button in mobile view */
+    /* Additional styles for the sign-in button in the dropdown */
     .navbar-links li button.sign-in-button {
-        margin: 1em 0;
         width: 80%;
     }
 }

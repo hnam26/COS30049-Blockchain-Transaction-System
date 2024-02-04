@@ -110,3 +110,18 @@
   font-weight: bold;
   margin: 0;
 }
+
+@media only screen and (max-width: 768px) {
+  
+  /* Styles for the transaction table section in mobile view */
+  .transactions-table {
+    overflow-x: auto;
+    white-space: nowrap;
+    display: block;
+  }
+  
+  .transactions-table th, .transactions-table td {
+    white-space: nowrap;
+    /* display: inline-block; */
+  }
+}
