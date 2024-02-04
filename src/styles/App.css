@@ -54,14 +54,13 @@ html {
   background-color: #f0f0f0;
   /* Change background color on hover */
 }
-
 /* Error styles */
 .revenueError {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 20px;
-  background-color: #ffcccc;
+  background-color: #ffcccc; 
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -71,12 +70,9 @@ html {
 }
 
 @keyframes bounce {
-
-  from,
-  to {
+  from, to {
     transform: translateY(0);
   }
-
   50% {
     transform: translateY(-10px);
   }
@@ -88,7 +84,8 @@ html {
 }
 
 .revenueError p {
-  color: #cc0000;
+  color: #cc0000; 
   font-weight: bold;
-  margin: 0;
+  margin: 0; 
 }
+
