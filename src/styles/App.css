@@ -26,9 +26,7 @@
 }
 
 .table-responsive {
-  width: 100%;
   overflow-x: auto;
-  /* Add horizontal scrollbar when necessary */
 }
 
 .transactions-table {
