@@ -20,8 +20,8 @@ const Account = () => {
     useEffect(() => {
         // Fetch new data here every time `params.id` changes
         const fetchData = async () => {
-            const fetchedNode = findNodesByWalletAddress(params.id);
-            const fetchedTransHistory = calculateExpensesAndIncomes(params.id);
+            const fetchedNode = findNodesByWalletAddress(params.id); // Fetch node information based on wallet address
+            const fetchedTransHistory = calculateExpensesAndIncomes(params.id); // Calculate and fetch expenses and incomes
             const fetchedSummary = getTransactionSummary(params.id); // Fetch summary data
             const fetchedTransactions = getTransactionDetails(params.id, -1); // Fetch transactions data
 
