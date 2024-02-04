@@ -119,6 +119,8 @@ export function getTransactionDetails(walletAddress) {
 
     relevantLinks.forEach(link => {
         const type = link.source === walletAddress ? 'Sent' : 'Received';
+        const sender = link.source;
+        const receiver = link.target;
         const amount = `${link.value} BTC`; // Assuming the value is in BTC
         const fee = `${link.fee} BTC`; // Assuming the fee is in BTC
         const status = link.status;
@@ -128,6 +130,8 @@ export function getTransactionDetails(walletAddress) {
         transactions.push({
             transactionId,
             type,
+            sender,
+            receiver,
             amount,
             fee,
             status,

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import "../styles/SearchBox.css";
+import '../styles/search.css';
 
 const Search = () => {
     const [searchValue, setSearchValue] = useState('');
@@ -16,7 +16,8 @@ const Search = () => {
 
     return (
         <>
-            <form className='formSearch' onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="search">Search</label>
                 <input
                     type="text"
                     className='searchBox'
@@ -24,6 +25,7 @@ const Search = () => {
                     value={searchValue}
                     onChange={(e) => setSearchValue(e.target.value)}
                 />
+                <button type="submit" id='search-btn'>Search</button>
             </form>
         </>
     );

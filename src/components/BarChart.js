@@ -95,7 +95,6 @@ const BarChart = ({ props }) => {
     }, [props]);
     return (
         <div className="chartTransaction">
-            <p>Summary</p>
             {chartData && (
                 <Bar
                     data={chartData}

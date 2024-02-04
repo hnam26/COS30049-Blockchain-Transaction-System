@@ -5,7 +5,9 @@ const TransactionsTable = ({ transactions }) => {
     <table className="transactions-table">
       <thead>
         <tr>
-          <th>Transaction</th>
+          <th>ID</th>
+          <th>Sender</th>
+          <th>Receiver</th>
           <th>Type</th>
           <th>Amount</th>
           <th>Fee</th>
@@ -17,6 +19,8 @@ const TransactionsTable = ({ transactions }) => {
         {transactions.map((transaction, index) => (
           <tr key={index}>
             <td>{transaction.transactionId}</td>
+            <td>{transaction.sender}</td>
+            <td>{transaction.receiver}</td>
             <td>{transaction.type}</td>
             <td>{transaction.amount}</td>
             <td>{transaction.fee}</td>

@@ -88,7 +88,6 @@ const TransactionGraph = ({ data }) => {
             setGraph({ nodes: [], links: [] });
             const { nodes, links } = data;
             const adjustedLinks = adjustLinks([...links]); // Create a copy of links
-            console.log(adjustedLinks);
             setAllNodes([...nodes]); // Create a copy of nodes
             setAllLinks(adjustedLinks); // Update state immutably
         }

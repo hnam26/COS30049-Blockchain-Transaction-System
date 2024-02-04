@@ -10,6 +10,7 @@ const Account = () => {
 
     const params = useParams();
     const transData = transactionData();
+    const [showWalletContent, setShowWalletContent] = useState(true);
 
     // Define state variables for node, transHistory, transData, summary, and transactions
     const [data, setData] = useState({ node: null, transHistory: null, summary: null, transactions: null });
@@ -34,12 +35,24 @@ const Account = () => {
         <>
             {data.node ? (
                 <>
-                    <BarChart props={data.transHistory} />
-                    <TransactionSummary summary={data.summary} />
-                    <TransactionsTable transactions={data.transactions} />
-                    <div style={{ marginTop: "100px" }}>
-                        <TransactionGraph data={transData} />
-                    </div>
+                    {/* Tạo component thêm thông tin user ở đây  */}
+
+
+                    <button onClick={() => setShowWalletContent(true)}>Wallet</button>
+                    <button onClick={() => setShowWalletContent(false)}>Chart</button>
+                    {showWalletContent ? (
+                        <>
+                            <BarChart props={data.transHistory} />
+                            <TransactionSummary summary={data.summary} />
+                            <TransactionsTable transactions={data.transactions} />
+                        </>
+                    ) : (
+                        <>
+                            <div style={{ marginTop: "100px" }}>
+                                <TransactionGraph data={transData} />
+                            </div>
+                        </>
+                    )}
                 </>
             ) : (
                 <HandleRevenueError />

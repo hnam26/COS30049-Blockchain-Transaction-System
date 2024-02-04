@@ -1,5 +1,5 @@
 import React from "react";
-import errorImage from "../assets/sad.png";
+import errorImage from "../assets/images/sad.png";
 
 const HandleRevenueError = () => {
     return (
