@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { ForceGraph3D } from 'react-force-graph';
 import { useParams } from "react-router-dom";
 import * as THREE from 'three';
-import "../styles/TransactionGraphCss.css";
+import "../styles/transactiongraphcss.css";
 
 const TransactionGraph = ({ data }) => {
     const params = useParams();

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS } from "chart.js/auto";
-import "../styles/Chart.css";
+import "../styles/chart.css";
 
 // BarChart component
 const BarChart = ({ props }) => {
