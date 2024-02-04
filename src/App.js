@@ -1,6 +1,7 @@
 import React from "react";
 import "./styles/App.css";
 import Navbar from "./components/Navbar";
+import SearchBar from "./components/Search";
 import BitcoinBalance from "./components/BitcoinBalance";
 import TransactionsTable from "./components/TransactionsTable";
 import TransactionSummary from "./components/TransactionSummary";
@@ -21,12 +22,8 @@ const App = () => {
   return (
     <div className="App">
       <Navbar />
-      <div style={{ width: "50%" }}>
-        <Search />
-      </div>
-      <Outlet />
-      {/* <BitcoinBalance /> */}
-      {/* <BarChart /> */}
+      <SearchBar />
+      <BitcoinBalance />
       <TransactionSummary summary={summary} />
       <TransactionsTable transactions={transactions} />
     </div>

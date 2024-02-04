@@ -1,31 +1,41 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom'; // Import useNavigate from 'react-router-dom'
-import "../styles/SearchBox.css";
+import React from 'react';
+import '../styles/search.css';
 
-const Search = () => {
-    const [searchValue, setSearchValue] = useState('');
-    const navigate = useNavigate(); // Use useNavigate to get the navigation function
+// Create a search bar component
+class SearchBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            searchTerm: ''
+        };
+    }
 
-    const handleSubmit = (event) => {
-        event.preventDefault();  // Prevent the default form submission behavior
+    // Handle search term change
+    handleSearchTermChange = (event) => {
+        this.setState({ searchTerm: event.target.value });
+    }
 
-        // Redirect to the desired URL with the search value
-        navigate(`/${searchValue}`);
-    };
+    // Handle search form submission
+    handleSearchSubmit = (event) => {
+        event.preventDefault();
+        // Perform search logic here using this.state.searchTerm
+        // ...
+    }
 
-    return (
-        <>
-            <form className='formSearch' onSubmit={handleSubmit}>
+    render() {
+        return (
+            <form onSubmit={this.handleSearchSubmit}>
+                <label htmlFor="search">Search</label>
                 <input
                     type="text"
-                    className='searchBox'
-                    placeholder='Search wallet address ...'
-                    value={searchValue}
-                    onChange={(e) => setSearchValue(e.target.value)}
+                    value={this.state.searchTerm}
+                    onChange={this.handleSearchTermChange}
+                    placeholder="Search wallet address"
                 />
+                <button type="submit">Search</button>
             </form>
-        </>
-    );
-};
+        );
+    }
+}
 
-export default Search;
+export default SearchBar;
