@@ -7,15 +7,15 @@ const TransactionSummary = ({ summary }) => {
       <div className="summary-stats">
         <div className="summary-stat">
           <p>Total transactions</p>
-          <span>{summary.totalTransactions}</span>
+          <span><b>{summary.totalTransactions}</b></span>
         </div>
         <div className="summary-stat">
           <p>Total received</p>
-          <span>{summary.totalReceived}</span>
+          <span><b>{summary.totalReceived}</b></span>
         </div>
         <div className="summary-stat">
           <p>Total sent</p>
-          <span>{summary.totalSent}</span>
+          <span><b>{summary.totalSent}</b></span>
         </div>
       </div>
     </section>
