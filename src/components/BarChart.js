@@ -6,15 +6,16 @@ import "../styles/Chart.css";
 const BarChart = ({ props }) => {
     const options = {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 position: 'bottom',
             },
             title: {
                 display: true,
-                text: '',
+                text: 'All transactions',
                 font: {
-                    size: "25",
+                    size: "20",
                 }
             },
         },
