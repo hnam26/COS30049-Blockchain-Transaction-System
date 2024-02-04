@@ -1,3 +1,11 @@
+// We are group 3.1 - NST 
+// Team members:
+// 1. Nguyen Chanh Hoai Nam - 104195191
+// 2. Dinh Xuan Sinh - 104180692
+// 3. Le Quang Thien - 104226017
+
+
+
 import React from 'react';
 import './styles/app.css';
 import Navbar from './components/Navbar';

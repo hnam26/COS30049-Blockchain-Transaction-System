@@ -97,3 +97,43 @@
     margin-bottom: .5rem;
     text-align: center;
 }
+
+/* Responsive Styles for Footer */
+@media only screen and (max-width: 1024px) {
+    /* Adjusting width of footer left section */
+    .footer-left {
+        width: 40%;
+    }
+
+    /* Adjusting width and margin of footer links section */
+    .footer-links {
+        width: 50%;
+        margin: 0;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    /* Adjusting layout for footer upper section in mobile view */
+    .footer-upper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Removing margin for footer left section in mobile view */
+    .footer-left {
+        margin: 0;
+    }
+
+    /* Removing margin for footer links section in mobile view */
+    .footer-links {
+        margin: 0;
+    }
+}
+
+@media only screen and (max-width: 426px) {
+    /* Adjusting width and margin of footer links section for smaller screens */
+    .footer-links {
+        width: 100%;
+        margin: 0;
+    }
+}

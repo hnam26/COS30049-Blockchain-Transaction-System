@@ -25,3 +25,21 @@
     flex-direction: column;
     align-items: center;
 }
+
+@media screen and (max-width: 768px) {
+    /* Styles for transaction summary container in mobile view */
+    .transaction-summary {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Styles for transaction summary heading in mobile view */
+    .transaction-summary h2 {
+        width: 100%;
+    }
+
+    /* Styles for summary stats container in mobile view */
+    .summary-stats {
+        flex-direction: column;
+    }
+}
