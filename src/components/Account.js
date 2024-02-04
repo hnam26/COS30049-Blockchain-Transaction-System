@@ -4,8 +4,10 @@ import BarChart from "./BarChart";
 import TransactionsTable from "./TransactionsTable";
 import TransactionSummary from "./TransactionSummary";
 import TransactionGraph from "./TransactionGraph";
+import UserInfo from "./UserInfo";
 import { calculateExpensesAndIncomes, findNodesByWalletAddress, transactionData, getTransactionDetails, getTransactionSummary } from "../data/transactionData";
 import HandleRevenueError from "./ErrorHandler";
+import AccountCss from "../styles/AccountCss.css";
 const Account = () => {
 
     const params = useParams();
@@ -21,7 +23,7 @@ const Account = () => {
             const fetchedNode = findNodesByWalletAddress(params.id);
             const fetchedTransHistory = calculateExpensesAndIncomes(params.id);
             const fetchedSummary = getTransactionSummary(params.id); // Fetch summary data
-            const fetchedTransactions = getTransactionDetails(params.id); // Fetch transactions data
+            const fetchedTransactions = getTransactionDetails(params.id, -1); // Fetch transactions data
 
             // Update your state variables with the new data
             setData({ node: fetchedNode, transHistory: fetchedTransHistory, summary: fetchedSummary, transactions: fetchedTransactions });
@@ -35,22 +37,27 @@ const Account = () => {
         <>
             {data.node ? (
                 <>
-                    {/* Tạo component thêm thông tin user ở đây  */}
 
-
-                    <button onClick={() => setShowWalletContent(true)}>Wallet</button>
-                    <button onClick={() => setShowWalletContent(false)}>Chart</button>
+                    <UserInfo props={{ nodes: data.node, summary: data.summary }} />
+                    <div className="userSelect">
+                        <button className={"buttonToggle" + (showWalletContent ? " active" : "")} onClick={() => setShowWalletContent(true)}>Wallet</button>
+                        <button className={"buttonToggle" + (!showWalletContent ? " active" : "")} onClick={() => setShowWalletContent(false)}>Chart</button>
+                    </div>
                     {showWalletContent ? (
                         <>
-                            <BarChart props={data.transHistory} />
-                            <TransactionSummary summary={data.summary} />
+                            <div className="chart-summary-frame">
+                                <div className="bar">
+                                    <BarChart props={data.transHistory} />
+                                </div>
+                                <div className="summary">
+                                    <TransactionSummary summary={data.summary} />
+                                </div>
+                            </div>
                             <TransactionsTable transactions={data.transactions} />
                         </>
                     ) : (
                         <>
-                            <div style={{ marginTop: "100px" }}>
-                                <TransactionGraph data={transData} />
-                            </div>
+                            <TransactionGraph data={transData} />
                         </>
                     )}
                 </>
