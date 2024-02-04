@@ -1,3 +1,4 @@
+/* Styles for the main application container */
 .App {
   display: flex;
   flex-direction: column;
@@ -6,12 +7,13 @@
   /* padding: 20px; */
 }
 
+/* Styles for the brand name */
 .brand-name {
   font-size: 24px;
   font-weight: bold;
 }
 
-
+/* Styles for the Bitcoin balance section */
 .bitcoin-balance {
   display: flex;
   justify-content: space-between;
@@ -20,30 +22,34 @@
   margin-top: 30px;
 }
 
+/* Styles for the balance information */
 .balance-info {
   display: flex;
   flex-direction: column;
 }
 
+/* Styles for the transactions table */
 .transactions-table {
   width: 100%;
   margin: 30px 0;
   border-collapse: collapse;
-
 }
 
+/* Styles for table headers and cells */
 .transactions-table th,
 .transactions-table td {
   padding: 8px;
   text-align: center;
 }
 
+/* Styles for table header cells */
 .transactions-table th {
   background-color: #FF8080;
   font-weight: bold;
   color: white;
 }
 
+/* Styles for rounded corners on first and last header cells */
 .transactions-table th:first-child {
   border-top-left-radius: 8px;
 }
@@ -52,12 +58,14 @@
   border-top-right-radius: 8px;
 }
 
+/* Styles for table data cells */
 .transactions-table td {
   border: 1px solid #e0dfdf;
   border-left: none;
   border-right: none;
-
 }
+
+/* Styles for table row on hover */
 .transactions-table tr:hover {
   background-color: #f0f0f0;
   /* Change background color on hover */
@@ -78,8 +86,8 @@
   animation: bounce 0.5s ease-in-out forwards;
 }
 
+/* Animation keyframes for error message */
 @keyframes bounce {
-
   from,
   to {
     transform: translateY(0);
@@ -90,14 +98,15 @@
   }
 }
 
+/* Styles for error message image */
 .revenueError img {
   max-width: 20px;
   margin-right: 10px;
 }
 
+/* Styles for error message text */
 .revenueError p {
   color: #cc0000;
   font-weight: bold;
   margin: 0;
-
 }

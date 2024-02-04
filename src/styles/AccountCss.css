@@ -1,3 +1,4 @@
+/* Styles for user selection container */
 .userSelect {
     width: 100%;
     display: flex;
@@ -8,6 +9,7 @@
     border-bottom: 1px solid rgb(238, 238, 238);
 }
 
+/* Styles for toggle button */
 .buttonToggle {
     display: flex;
     cursor: pointer;
@@ -34,10 +36,12 @@
     border-bottom: 2px solid transparent;
 }
 
+/* Hover effect for toggle button */
 .buttonToggle:hover {
     border-bottom: 2px solid rgb(0, 0, 0);
 }
 
+/* Styles for active state of toggle button */
 .buttonToggle.active {
     display: flex;
     cursor: pointer;
@@ -64,6 +68,7 @@
     border-bottom: 2px solid rgb(0, 0, 0);
 }
 
+/* Styles for the chart summary frame container */
 .chart-summary-frame {
     width: 100%;
     display: flex;
@@ -73,14 +78,17 @@
     margin-bottom: 40px;
 }
 
+/* Styles for the bar within the chart summary frame */
 .chart-summary-frame .bar {
     width: 50%;
 }
 
+/* Styles for the summary within the chart summary frame */
 .chart-summary-frame .summary {
     width: 40%;
 }
 
+/* Responsive styles for smaller screens */
 @media (max-width: 600px) {
     .userSelect {
         -webkit-box-pack: start;

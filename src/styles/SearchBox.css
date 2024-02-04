@@ -1,7 +1,10 @@
+/* Styles for the search box container */
+ 
 .formSearch {
     margin: 20px;
 }
 
+/* Styles for the search box */
 .searchBox {
     border-radius: .375rem;
     padding-left: 2.5rem;

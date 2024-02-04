@@ -48,52 +48,61 @@ const UserInfo = ({ props: { nodes, summary } }) => {
                 // console.error("Failed to copy:", error);
             });
     };
-    return (
-        <>
-            {showPopup && (
-                <div className="popup-message">Copied to clipboard!</div>
-            )}
-            <div className="user-info">
-                <img
-                    src={avatar}
-                    alt="Avatar"
-                    className="avatar"
-                />
+   // Render UserInfo component
+   return (
+    <>
+        {showPopup && (
+            <div className="popup-message">Copied to clipboard!</div>
+        )}
+        <div className="user-info">
+            {/* Avatar image */}
+            <img
+                src={avatar}
+                alt="Avatar"
+                className="avatar"
+            />
 
-                <div className="content">
-                    <p>{shortenNodeId(node.id)}</p>
-                    <div className="format-address">
-                        <div className="format-address-icon"></div>
-                        <span>Legacy</span>
-                    </div>
-                    <div className="qr-frame" onClick={handleCopyToClipboard}>
-                        <div style={{ width: "max-content", display: "inline-flex" }}>
-                            <div className="qr-background">
-                                <div className="qr-icon"></div>
-                            </div>
-                        </div>
-                        <div style={{ display: "flex", flexDirection: "column" }}>
-                            <p style={{ fontSize: "0.9rem", fontWeight: "600", marginBottom: "0.1rem" }}>Bitcoin Address</p>
-                            <div className="qr-content">
-                                <span>{node.id}</span>
-                                <div className="copy-icon"></div>
-                            </div>
-                        </div>
-                    </div>
+            {/* User information content */}
+            <div className="content">
+                <p>{shortenNodeId(node.id)}</p>
+                {/* Format address details */}
+                <div className="format-address">
+                    <div className="format-address-icon"></div>
+                    <span>Legacy</span>
                 </div>
 
-                <div className="balance-frame">
-                    <div className="balance-info">
-                        <div class="balance-header">Bitcoin Balance</div>
-                        <div className="balance-data">
-                            <span class="balance-wallet">{calculateTotal(summary)} BTC</span>
-                            <span class="dot">•</span>
-                            <span class="covert-dollar">${bitcoinToDollars(calculateTotal(summary), 40000)}</span>
+                {/* QR code section */}
+                <div className="qr-frame" onClick={handleCopyToClipboard}>
+                    <div style={{ width: "max-content", display: "inline-flex" }}>
+                        <div className="qr-background">
+                            <div className="qr-icon"></div>
+                        </div>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                        <p style={{ fontSize: "0.9rem", fontWeight: "600", marginBottom: "0.1rem" }}>Bitcoin Address</p>
+                        <div className="qr-content">
+                            <span>{node.id}</span>
+                            <div className="copy-icon"></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </>
-    );
+
+            {/* Balance section */}
+            <div className="balance-frame">
+                <div className="balance-info">
+                    <div class="balance-header">Bitcoin Balance</div>
+                    <div className="balance-data">
+                        <span class="balance-wallet">{calculateTotal(summary)} BTC</span>
+                        <span class="dot">•</span>
+                        <span class="covert-dollar">${bitcoinToDollars(calculateTotal(summary), 40000)}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </>
+);
 };
+
+// Export UserInfo component
 export default UserInfo;

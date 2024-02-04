@@ -126,6 +126,7 @@ const TransactionGraph = ({ data }) => {
                 return sphere;
             })}
             linkLabel={link => {
+                // Implementation for custom link color
                 let tooltipContent = "<div class='label'>";
                 tooltipContent += "<span class='label'>Transaction ID: " + link.label + "</span>";
                 tooltipContent += "<span class='label'>Value: " + link.value + "</span>";
@@ -147,4 +148,5 @@ const TransactionGraph = ({ data }) => {
     );
 };
 
+// Export TransactionGraph component
 export default TransactionGraph;

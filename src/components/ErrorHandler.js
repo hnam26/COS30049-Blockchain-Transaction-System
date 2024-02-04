@@ -1,7 +1,9 @@
 import React from "react";
 import errorImage from "../assets/images/sad.png";
 
+// HandleRevenueError component
 const HandleRevenueError = () => {
+    // Render error message with image
     return (
         <div className="revenueError">
             <img src={errorImage} alt="Error" />
@@ -12,4 +14,5 @@ const HandleRevenueError = () => {
     );
 };
 
+// Export HandleRevenueError component
 export default HandleRevenueError;
