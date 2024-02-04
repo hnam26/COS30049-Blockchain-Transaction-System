@@ -33,13 +33,6 @@ const BarChart = ({ props }) => {
             },
             x: {
                 beginAtZero: true,
-                title: {
-                    display: "true",
-                    text: "Date",
-                    font: {
-                        size: "20",
-                    }
-                },
                 padding: { top: 30, left: 0, right: 0, bottom: 0 },
             }
 
