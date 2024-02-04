@@ -40,18 +40,22 @@ export function findNodesByWalletAddress(walletAddress) {
     return NodeFinding.length > 0 ? NodeFinding : null;
 }
 
-export function findLinksByWalletAddress(walletAddress, slice = true) {
+export function findLinksByWalletAddress(walletAddress, day) {
     // Assuming nodes and links are arrays
     const nodesCopy = Object.freeze([...nodes]); // Creating a shallow copy and freezing it
     const linksCopy = Object.freeze([...links]); // Creating a shallow copy and freezing it
     let relevantLinks = [];
     relevantLinks = linksCopy.filter(link => link.source === walletAddress || link.target === walletAddress);
     relevantLinks.sort((a, b) => new Date(b.date) - new Date(a.date));
-    return slice ? relevantLinks.slice(0, 10) : relevantLinks;
+    if (day > 0) {
+        return relevantLinks.slice(0, day);
+    } else {
+        return relevantLinks;
+    }
 }
 
-export function calculateExpensesAndIncomes(walletAddress) {
-    let linksByAddress = findLinksByWalletAddress(walletAddress);
+export function calculateExpensesAndIncomes(walletAddress, day = 10) {
+    let linksByAddress = findLinksByWalletAddress(walletAddress, day);
 
     let transactionsByDate = {};
     linksByAddress.forEach(link => {
@@ -91,8 +95,8 @@ export function calculateExpensesAndIncomes(walletAddress) {
     return result;
 }
 
-export function getTransactionSummary(walletAddress) {
-    const relevantLinks = findLinksByWalletAddress(walletAddress, false); // Fetch all relevant links
+export function getTransactionSummary(walletAddress, day = 10) {
+    const relevantLinks = findLinksByWalletAddress(walletAddress, day); // Fetch all relevant links
     const totalTransactions = relevantLinks.length;
 
     let totalReceived = 0;

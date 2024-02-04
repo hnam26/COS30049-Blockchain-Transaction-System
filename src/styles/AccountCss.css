@@ -1,0 +1,104 @@
+.userSelect {
+    width: 100%;
+    display: flex;
+    flex-flow: wrap;
+    gap: 5px;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border-bottom: 1px solid rgb(238, 238, 238);
+}
+
+.buttonToggle {
+    display: flex;
+    cursor: pointer;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    background-color: rgb(255, 255, 255);
+    color: rgb(153, 153, 153);
+    opacity: 1;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-image: initial;
+    padding: 10px 0px;
+    border-radius: 0px;
+    font-weight: 700;
+    font-size: 0.875rem;
+    margin: 0px 2.5px;
+    transition: all 0.2s ease-in 0s;
+    height: 40px;
+    min-width: 79px;
+    box-sizing: border-box;
+    border-bottom: 2px solid transparent;
+}
+
+.buttonToggle:hover {
+    border-bottom: 2px solid rgb(0, 0, 0);
+}
+
+.buttonToggle.active {
+    display: flex;
+    cursor: pointer;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    background-color: rgb(255, 255, 255);
+    color: rgb(153, 153, 153);
+    opacity: 1;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-image: initial;
+    padding: 10px 0px;
+    border-radius: 0px;
+    font-weight: 700;
+    font-size: 0.875rem;
+    margin: 0px 2.5px;
+    transition: all 0.2s ease-in 0s;
+    height: 40px;
+    min-width: 79px;
+    box-sizing: border-box;
+    border-bottom: 2px solid rgb(0, 0, 0);
+}
+
+.chart-summary-frame {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    min-height: 350px;
+    margin-bottom: 40px;
+}
+
+.chart-summary-frame .bar {
+    width: 50%;
+}
+
+.chart-summary-frame .summary {
+    width: 40%;
+}
+
+@media (max-width: 600px) {
+    .userSelect {
+        -webkit-box-pack: start;
+        justify-content: flex-start;
+        padding-left: 10px;
+    }
+
+    .chart-summary-frame {
+        flex-direction: column;
+    }
+
+    .chart-summary-frame .bar {
+        width: 100%;
+    }
+
+    .chart-summary-frame .summary {
+        width: 100%;
+        border: none;
+        margin-top: 10px;
+    }
+}
