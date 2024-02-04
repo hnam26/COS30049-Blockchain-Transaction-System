@@ -1,7 +1,6 @@
 @font-face {
   font-family: 'Barlow';
   src: url('../assets/fonts/barlow/Barlow-Medium.ttf') format('truetype');
-  /* Adjust the path accordingly */
 }
 
 /* Vars  */
@@ -20,11 +19,11 @@
 form {
     position: relative;
     width: 30rem;
-    background: var(--color-brand);
+    background: var(--color-light);
     border-radius: var(--rad);
     margin: 1em
   }
-  input, button {
+  input, #search-btn {
     height: var(--height);
     font-family: var(--font-fam);
     border: 0;
@@ -35,10 +34,13 @@ form {
 
   input {
     width: 100%;
+    outline: none;
     background: var(--color-light);
     border-radius: var(--rad);
+    border: #DEDEDE solid 1px;
     appearance: none;
-    transition: all var(--dur) var(--bez);
+    box-shadow: 0 0 5px var(--color-dark);
+
   }
   
   input[type="search"] {
@@ -47,18 +49,16 @@ form {
     background: var(--color-light);
     padding: 0 1.6rem;
     border-radius: var(--rad);
-    appearance: none; 
-    transition: all var(--dur) var(--bez);
-    transition-property: width, border-radius;
+    appearance: none;
     z-index: 1;
     position: relative;
   }
 
-  button {
+  #search-btn {
     display: none; 
     position: absolute;
     top: 0;
-    right: -29px;
+    right: -30px;
     width: var(--btn-width);
     font-weight: lighter;
     background: var(--color-brand);
@@ -68,17 +68,21 @@ form {
     padding-left: 1.05em;
     height: 80%;
     margin-top: .2rem;
-    transition: all var(--dur) var(--bez);
-    transition-property: opacity, transform;
+    transition-duration: var(--dur);
+    transition-property: display;
+    animation: fadeInAnimation var(--dur);
   }
 
   input:not(:placeholder-shown) {
     border-radius: var(--rad) ;
     width: calc(100%);
-    + button {
+    outline: none;
+    + #search-btn {
       display: block;
     }
   }
+
+  
 
   label {
     position: absolute;
@@ -90,3 +94,11 @@ form {
     overflow: hidden;
   }
   
+  @keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
