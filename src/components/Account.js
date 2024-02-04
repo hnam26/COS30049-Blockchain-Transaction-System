@@ -7,7 +7,7 @@ import TransactionGraph from "./TransactionGraph";
 import UserInfo from "./UserInfo";
 import { calculateExpensesAndIncomes, findNodesByWalletAddress, transactionData, getTransactionDetails, getTransactionSummary } from "../data/transactionData";
 import HandleRevenueError from "./ErrorHandler";
-import accountcss from "../styles/accountcss.css";
+import accountcss from "../styles/account.css";
 const Account = () => {
 
     const params = useParams();
