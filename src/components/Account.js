@@ -6,7 +6,7 @@ import TransactionSummary from "./TransactionSummary";
 import TransactionGraph from "./TransactionGraph";
 import UserInfo from "./UserInfo";
 import { calculateExpensesAndIncomes, findNodesByWalletAddress, transactionData, getTransactionDetails, getTransactionSummary } from "../data/transactionData";
-import HandleRevenueError from "./errorHandler";
+import HandleRevenueError from "./ErrorHandler";
 import AccountCss from "../styles/AccountCss.css";
 const Account = () => {
 
