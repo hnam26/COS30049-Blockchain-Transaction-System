@@ -1,34 +1,41 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import '../styles/search.css';
 
-const Search = () => {
-    const [searchValue, setSearchValue] = useState('');
-    const navigate = useNavigate();
+// Create a search bar component
+class SearchBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            searchTerm: ''
+        };
+    }
 
-    const handleSubmit = (event) => {
+    // Handle search term change
+    handleSearchTermChange = (event) => {
+        this.setState({ searchTerm: event.target.value });
+    }
+
+    // Handle search form submission
+    handleSearchSubmit = (event) => {
         event.preventDefault();
-        // Navigate to the same URL to reload the page
-        navigate(`/${searchValue}`);
-        // Reset the search value
-        setSearchValue('');
-    };
+        // Perform search logic here using this.state.searchTerm
+        // ...
+    }
 
-    return (
-        <>
-            <form onSubmit={handleSubmit}>
+    render() {
+        return (
+            <form onSubmit={this.handleSearchSubmit}>
                 <label htmlFor="search">Search</label>
                 <input
                     type="text"
-                    className='searchBox'
-                    placeholder='Search wallet address ...'
-                    value={searchValue}
-                    onChange={(e) => setSearchValue(e.target.value)}
+                    value={this.state.searchTerm}
+                    onChange={this.handleSearchTermChange}
+                    placeholder="Search wallet address"
                 />
                 <button type="submit" id='search-btn'>Search</button>
             </form>
-        </>
-    );
-};
+        );
+    }
+}
 
-export default Search;
+export default SearchBar;
