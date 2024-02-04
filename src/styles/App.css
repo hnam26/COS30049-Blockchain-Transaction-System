@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  padding: 20px;
+  padding-top: 20px;
+  /* padding: 20px; */
 }
 
 .brand-name {
@@ -27,7 +27,7 @@
 
 .transactions-table {
   width: 100%;
-  margin-top: 30px;
+  margin: 30px 0;
   border-collapse: collapse;
 }
 
@@ -48,13 +48,14 @@
   background-color: #f0f0f0;
   /* Change background color on hover */
 }
+
 /* Error styles */
 .revenueError {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 20px;
-  background-color: #ffcccc; 
+  background-color: #ffcccc;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -64,9 +65,12 @@
 }
 
 @keyframes bounce {
-  from, to {
+
+  from,
+  to {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-10px);
   }
@@ -78,9 +82,8 @@
 }
 
 .revenueError p {
-  color: #cc0000; 
+  color: #cc0000;
   font-weight: bold;
-  margin: 0; 
+  margin: 0;
 
 }
-

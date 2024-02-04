@@ -6,7 +6,7 @@ import TransactionSummary from "./TransactionSummary";
 import TransactionGraph from "./TransactionGraph";
 import UserInfo from "./UserInfo";
 import { calculateExpensesAndIncomes, findNodesByWalletAddress, transactionData, getTransactionDetails, getTransactionSummary } from "../data/transactionData";
-import HandleRevenueError from "./ErrorHandler";
+import HandleRevenueError from "./errorHandler";
 import AccountCss from "../styles/AccountCss.css";
 const Account = () => {
 
@@ -44,7 +44,8 @@ const Account = () => {
                         <button className={"buttonToggle" + (!showWalletContent ? " active" : "")} onClick={() => setShowWalletContent(false)}>Chart</button>
                     </div>
                     {showWalletContent ? (
-                        <>
+
+                        <div style={{ width: "95%", padding: "0px 80px" }}>
                             <div className="chart-summary-frame">
                                 <div className="bar">
                                     <BarChart props={data.transHistory} />
@@ -54,7 +55,7 @@ const Account = () => {
                                 </div>
                             </div>
                             <TransactionsTable transactions={data.transactions} />
-                        </>
+                        </div>
                     ) : (
                         <>
                             <TransactionGraph data={transData} />
