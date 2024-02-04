@@ -7,7 +7,6 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        {/* Wrap the image inside an <a> tag */}
         <Link to="/">
           <img src={basicLogo} alt="Swinburne logo" />
         </Link>
