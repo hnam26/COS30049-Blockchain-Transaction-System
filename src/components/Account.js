@@ -1,55 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import BarChart from "./BarChart";
 import TransactionsTable from "./TransactionsTable";
 import TransactionSummary from "./TransactionSummary";
 import TransactionGraph from "./TransactionGraph";
-import { calculateExpensesAndIncomes, transactionData, findNodesByWalletAddress } from "../data/transactionData";
+import { calculateExpensesAndIncomes, findNodesByWalletAddress, transactionData, getTransactionDetails, getTransactionSummary } from "../data/transactionData";
+import HandleRevenueError from "./ErrorHandler";
 const Account = () => {
-    const params = useParams();
-    const wallet = params.id;
-    const summary = {
-        totalTransactions: 513,
-        totalReceived: "21546 BTC",
-        totalSent: "21546 BTC",
-    };
-    const transactions = [
-        {
-            transactionId: 'ABC123',
-            type: 'Purchase',
-            amount: '$100.00',
-            fee: '$1.50',
-            status: 'Completed',
-            date: '2024-01-01'
-        },
-        {
-            transactionId: 'DEF456',
-            type: 'Withdrawal',
-            amount: '$50.00',
-            fee: '$2.00',
-            status: 'Pending',
-            date: '2024-01-02'
-        },
-        // Add more transaction objects as needed
-    ];
 
-    const transHistory = calculateExpensesAndIncomes(wallet);
+    const params = useParams();
     const transData = transactionData();
-    const node = findNodesByWalletAddress(wallet);
+
+    // Define state variables for node, transHistory, transData, summary, and transactions
+    const [data, setData] = useState({ node: null, transHistory: null, summary: null, transactions: null });
+
+    useEffect(() => {
+        // Fetch new data here every time `params.id` changes
+        const fetchData = async () => {
+            const fetchedNode = findNodesByWalletAddress(params.id);
+            const fetchedTransHistory = calculateExpensesAndIncomes(params.id);
+            const fetchedSummary = getTransactionSummary(params.id); // Fetch summary data
+            const fetchedTransactions = getTransactionDetails(params.id); // Fetch transactions data
+
+            // Update your state variables with the new data
+            setData({ node: fetchedNode, transHistory: fetchedTransHistory, summary: fetchedSummary, transactions: fetchedTransactions });
+        };
+
+        fetchData();
+    }, [params.id]);
+
+
     return (
         <>
-            {node ? (
+            {data.node ? (
                 <>
-                    <BarChart props={transHistory} />
-                    <TransactionSummary summary={summary} />
-                    <TransactionsTable transactions={transactions} />
+                    <BarChart props={data.transHistory} />
+                    <TransactionSummary summary={data.summary} />
+                    <TransactionsTable transactions={data.transactions} />
                     <div style={{ marginTop: "100px" }}>
                         <TransactionGraph data={transData} />
                     </div>
-
                 </>
             ) : (
-                <h1>There is no wallet address</h1>
+                <HandleRevenueError />
             )}
         </>
     );

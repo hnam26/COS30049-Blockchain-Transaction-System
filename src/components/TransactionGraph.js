@@ -13,7 +13,8 @@ const TransactionGraph = ({ data }) => {
     // Function to adjust curvature and rotation for duplicate links
     const adjustLinks = (links) => {
         let linkMap = {};
-        links.forEach(link => {
+        const adjustLinks = links.map(link => ({ ...link })); // Create new objects
+        adjustLinks.forEach(link => {
             let key = link.source < link.target ?
                 link.source + '-' + link.target :
                 link.target + '-' + link.source;
@@ -32,7 +33,10 @@ const TransactionGraph = ({ data }) => {
                 });
             }
         });
+        return adjustLinks;
     };
+
+
 
 
     const displayConnectedNodes = (nodeId) => {
@@ -56,7 +60,6 @@ const TransactionGraph = ({ data }) => {
 
             allLinks.forEach(link => {
                 if (newDisplayedNodes.has(link.source) && newDisplayedNodes.has(link.target) && !links.find(l => l.source === link.source && l.target === link.target && l.label === link.label)) {
-                    console.log(link);
                     links.push(link);
                 }
             });
@@ -80,15 +83,19 @@ const TransactionGraph = ({ data }) => {
 
 
     useEffect(() => {
-        let nodes = data.nodes;
+        if (data) {
+            // Reset the graph state
+            setGraph({ nodes: [], links: [] });
+            const { nodes, links } = data;
+            const adjustedLinks = adjustLinks([...links]); // Create a copy of links
+            console.log(adjustedLinks);
+            setAllNodes([...nodes]); // Create a copy of nodes
+            setAllLinks(adjustedLinks); // Update state immutably
+        }
+    }, [data, params.id]);
 
-        let links = data.links;
 
-        adjustLinks(links);
 
-        setAllNodes(nodes);
-        setAllLinks(links);
-    }, []);
 
     useEffect(() => {
         // Display only 1 and its directly connected nodes initially
