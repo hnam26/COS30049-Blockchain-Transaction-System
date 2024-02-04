@@ -1,0 +1,226 @@
+/* Styles for user information container */
+.user-info {
+    display: flex;
+    width: 80%;
+    flex-wrap: wrap;
+    padding-top: 3rem;
+    padding-bottom: 8rem;
+}
+
+/* Styles for user avatar */
+.user-info .avatar {
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+}
+
+/* Styles for user information content */
+.user-info .content {
+    margin-left: 20px;
+}
+
+/* Styles for paragraphs within user information content */
+.user-info .content p {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+/* Styles for formatted address container */
+.format-address {
+    background-color: rgba(237, 155, 96, 0.15);
+    padding: 0px 0.875rem;
+    border-radius: 1rem;
+    height: 30px;
+    display: flex;
+    place-items: center;
+    margin: 0.7rem 0;
+}
+
+/* Styles for address format icon */
+.format-address-icon {
+    width: 16px;
+    height: 16px;
+    background-color: rgb(237, 155, 96);
+    mask-image: url(../assets/images/addressFormat.svg);
+    mask-position: center center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    display: inline-flex;
+    margin: 0px 5px 0px 0px;
+}
+
+/* Styles for span within formatted address */
+.format-address span {
+    color: rgb(237, 155, 96);
+}
+
+/* Styles for QR code frame */
+.qr-frame {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0px 10px;
+    margin: 0.875rem 0px;
+}
+
+/* Styles for QR code background */
+.qr-background {
+    aspect-ratio: 1 / 1;
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    border-radius: 6px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in 0s;
+    background-color: rgb(237, 155, 96);
+}
+
+/* Styles for QR code icon */
+.qr-icon {
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    mask-image: url(../assets/images/QRcode.svg);
+    mask-position: center center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    display: inline-flex;
+    margin: 0px;
+}
+
+/* Styles for QR code content */
+.qr-content {
+    font-size: 0.875rem;
+    max-height: max-content;
+    margin: 0px;
+    cursor: pointer;
+    word-break: break-all;
+    padding: 0px;
+    display: inline;
+}
+
+/* Styles for copy icon */
+.copy-icon {
+    width: 14px;
+    height: 14px;
+    background-color: rgb(153, 153, 153);
+    mask-image: url(../assets/images/copyIcon.svg);
+    mask-position: center center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    display: inline-flex;
+    margin: 0px 0px 0px 5px;
+}
+
+/* Styles for popup message */
+.popup-message {
+    position: fixed;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    animation: slideInDown 0.5s ease-out forwards, slideOutUp 0.5s ease-in 2s forwards;
+    z-index: 9999;
+}
+
+/* Styles for balance frame */
+.balance-frame {
+    display: flex;
+    flex-flow: wrap;
+    width: 100%;
+    padding: 15px 0;
+    border-radius: 20px;
+    margin: 0px;
+    overflow: hidden;
+    background-color: rgba(237, 155, 96, 0.15);
+}
+
+/* Styles for balance information */
+.balance-info {
+    min-height: 75px;
+    margin: 0px -1px 0px 12px;
+    border-right: 1px solid rgb(238, 238, 238);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1 1 0%;
+}
+
+/* Styles for balance header */
+.balance-header {
+    margin: 0px 10px;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+/* Styles for balance data */
+.balance-data {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    width: 100%;
+    color: rgb(153, 153, 153);
+    font-size: 0.875rem;
+    margin: 5px 10px 0px;
+}
+
+/* Styles for balance wallet */
+.balance-wallet {
+    width: max-content;
+    color: rgb(0, 0, 0);
+    font-size: 1.5rem;
+    margin: 0px;
+    font-weight: 400;
+}
+
+/* Styles for dot element */
+.dot {
+    display: inline-flex;
+    align-self: center;
+    color: rgb(0, 0, 0);
+    margin: 0px 0.25rem;
+    font-size: 0.875rem;
+}
+
+/* Styles for covert dollar element */
+.covert-dollar {
+    font-weight: 400;
+    margin: 0;
+    color: rgb(0, 0, 0);
+    font-size: 1.2rem;
+    margin-bottom: 0.1rem;
+}
+
+/* Keyframe animation for slide in down */
+@keyframes slideInDown {
+    0% {
+        top: -50px;
+        opacity: 0;
+    }
+
+    100% {
+        top: 20px;
+        opacity: 1;
+    }
+}
+
+/* Keyframe animation for slide out up */
+@keyframes slideOutUp {
+    0% {
+        top: 20px;
+        opacity: 1;
+    }
+
+    100% {
+        top: -50px;
+        opacity: 0;
+    }
+}

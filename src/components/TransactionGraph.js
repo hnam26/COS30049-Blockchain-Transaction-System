@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { ForceGraph3D } from 'react-force-graph';
 import { useParams } from "react-router-dom";
 import * as THREE from 'three';
-import "../styles/TransactionGraphCss.css";
+import "../styles/transaction-graph.css";
 
 const TransactionGraph = ({ data }) => {
     const params = useParams();
@@ -126,6 +126,7 @@ const TransactionGraph = ({ data }) => {
                 return sphere;
             })}
             linkLabel={link => {
+                // Implementation for custom link color
                 let tooltipContent = "<div class='label'>";
                 tooltipContent += "<span class='label'>Transaction ID: " + link.label + "</span>";
                 tooltipContent += "<span class='label'>Value: " + link.value + "</span>";
@@ -147,4 +148,5 @@ const TransactionGraph = ({ data }) => {
     );
 };
 
+// Export TransactionGraph component
 export default TransactionGraph;

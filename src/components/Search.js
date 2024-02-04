@@ -1,41 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/search.css';
 
-// Create a search bar component
-class SearchBar extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            searchTerm: ''
-        };
-    }
+// Search component
+const Search = () => {
+    // State for search input value
+    const [searchValue, setSearchValue] = useState('');
 
-    // Handle search term change
-    handleSearchTermChange = (event) => {
-        this.setState({ searchTerm: event.target.value });
-    }
+    // Hook for programmatic navigation
+    const navigate = useNavigate();
 
-    // Handle search form submission
-    handleSearchSubmit = (event) => {
-        event.preventDefault();
-        // Perform search logic here using this.state.searchTerm
-        // ...
-    }
+    // Handle form submission
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Navigate to the specified wallet address route
+        navigate(`/${searchValue}`);
+    };
 
-    render() {
-        return (
-            <form onSubmit={this.handleSearchSubmit}>
-                <label htmlFor="search">Search</label>
-                <input
-                    type="text"
-                    value={this.state.searchTerm}
-                    onChange={this.handleSearchTermChange}
-                    placeholder="Search wallet address"
-                />
-                <button type="submit" id='search-btn'>Search</button>
-            </form>
-        );
-    }
-}
+    // Handle input value change
+    const handleChange = (e) => {
+        setSearchValue(e.target.value);
+    };
 
-export default SearchBar;
+    // Render Search component
+    return (
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="search">Search</label>
+            {/* Input for entering wallet address */}
+            <input
+                type="text"
+                value={searchValue}
+                onChange={handleChange}
+                placeholder="Search wallet address"
+            />
+            {/* Button for submitting the search */}
+            <button type="submit" id='search-btn'>Search</button>
+        </form>
+    );
+};
+
+// Export Search component
+export default Search;

@@ -2,6 +2,9 @@ import React from "react";
 
 const TransactionsTable = ({ transactions }) => {
   return (
+    <>
+    <h2>Transactions History</h2>
+    {/* Display the transactions in a table */}
     <table className="transactions-table">
       <thead>
         <tr>
@@ -35,6 +38,7 @@ const TransactionsTable = ({ transactions }) => {
         ))}
       </tbody>
     </table>
+    </>
   );
 };
 
