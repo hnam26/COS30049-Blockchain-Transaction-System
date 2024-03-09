@@ -124,7 +124,7 @@ export const ProcessBarData = (links, id) => {
                 });
             }
         } else {
-            var foundDate = dates.find(d => d.date === date);
+            foundDate = dates.find(d => d.date === date);
             if (foundDate) {
                 foundDate.receive += +link.value; // Increase the sent value by the amount of link.value
             } else {

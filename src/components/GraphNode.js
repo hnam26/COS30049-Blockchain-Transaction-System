@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { ForceGraph2D } from 'react-force-graph';
 import { useParams } from "react-router-dom";
 import { ProcessGraphData } from '../data/Process';
@@ -7,9 +7,6 @@ import axios from 'axios';
 const GraphNode = ({ props: { nodes, links } }) => {
     const params = useParams();
     const fgRef = useRef();
-    const selectedLinkRef = useRef(null);
-    const [id, setId] = useState(undefined); // Initialize id state
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
     const [displayWidth, setDisplayWidth] = useState(window.innerWidth);
@@ -113,7 +110,7 @@ const GraphNode = ({ props: { nodes, links } }) => {
             `;
         }
     }
-
+    if (error) return `Error: $${error}`;
 
     return (
         <div className='graphNode'>
@@ -149,7 +146,7 @@ const GraphNode = ({ props: { nodes, links } }) => {
             <ForceGraph2D
                 ref={fgRef}
                 width={displayWidth * 0.7}
-                height={displayHeight * 0.7}
+                height={displayHeight}
                 graphData={graphDataCopy}
                 nodeVal={node => node.id === params.id ? 15 : 3}
                 nodeResolution={30}
@@ -159,7 +156,7 @@ const GraphNode = ({ props: { nodes, links } }) => {
                 })}
                 onNodeDrag={node => {
                     graphDataCopy.nodes.forEach(n => {
-                        if (n != node) {
+                        if (n !== node) {
                             n.fx = n.x;
                             n.fy = n.y;
                             n.fz = n.z;
@@ -214,7 +211,7 @@ const GraphNode = ({ props: { nodes, links } }) => {
                     } else {
                         displayLinkData();
                         graphDataCopy.links.forEach(l => {
-                            if (l.clicked == false) {
+                            if (l.clicked === false) {
                                 l.width = 0.3;
                             } else {
                                 displayLinkData(l);
@@ -234,7 +231,7 @@ const GraphNode = ({ props: { nodes, links } }) => {
                             link.width = 3;
                         }
                         graphDataCopy.links.forEach(l => {
-                            if (l != link) l.clicked = false;
+                            if (l !== link) l.clicked = false;
                         });
                         link.clicked = !link.clicked;
                     }

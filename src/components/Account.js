@@ -6,10 +6,9 @@ import TransactionSummary from "./TransactionSummary";
 import UserInfo from "./UserInfo";
 import HandleRevenueError from "./ErrorHandler";
 import GraphNode from "./GraphNode";
-import accountcss from "../styles/account.css";
-import { useReadCypher } from 'use-neo4j';
 import axios from 'axios';
 import { ProcessGraphData } from "../data/Process";
+import accountcss from "../styles/account.css";
 const Account = () => {
     const params = useParams();
     const id = params.id;
@@ -40,7 +39,7 @@ const Account = () => {
     }, [id]);
     if (loading) return <div>Loading</div>;
     if (error) return <div>Error: {error.message}</div>;
-    if (graphData.nodes.length != 0) {
+    if (graphData.nodes.length !== 0) {
         return (
             <>
                 <UserInfo props={{ ...{ nodes: graphData.nodes, links: graphData.links } }} />
