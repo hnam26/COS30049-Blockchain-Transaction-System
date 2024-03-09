@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS } from "chart.js/auto";
 import "../styles/chart.css";
-
+import { ProcessBarData } from "../data/Process";
+import { useParams } from "react-router-dom";
 // BarChart component
-const BarChart = ({ props }) => {
+const BarChart = ({ props: { nodes, links } }) => {
+    const params = useParams();
     // Chart options
     const options = {
         responsive: true,
@@ -42,32 +44,38 @@ const BarChart = ({ props }) => {
 
     // State for chart data
     const [chartData, setChartData] = useState(null);
-
+    const values = ProcessBarData(links, params.id);
     // useEffect to update chart data
     useEffect(() => {
-        const transHistory = props;
-        // Calculate average expense and income
-        const expenseAvg = transHistory.expense.reduce((acc, expense) => acc + expense, 0) / transHistory.expense.length;
-        const incomeAvg = transHistory.income.reduce((acc, income) => acc + income, 0) / transHistory.income.length;
 
+        var sent = 0;
+        values.forEach(value => {
+            sent += +value.sent;
+        });
+        const sentAvg = sent / values.length;
+        var receive = 0;
+        values.forEach(value => {
+            receive += value.receive;
+        });
+        const receiveAvg = receive / values.length;
         // Chart data
         const data = {
-            labels: transHistory.date,
+            labels: values.map((value) => value.date),
             datasets: [{
-                label: "Expense",
-                data: transHistory.expense,
+                label: "Sent",
+                data: values.map((value) => +value.sent),
                 backgroundColor: "#F6D6D6",
                 order: "1",
             },
             {
-                label: "Income",
-                data: transHistory.income,
+                label: "Receive",
+                data: values.map((value) => +value.receive),
                 backgroundColor: "#B7E5B4",
                 order: "1",
             },
             {
-                label: `Average Expense`,
-                data: Array(transHistory.date.length).fill(expenseAvg),
+                label: `Average Sent`,
+                data: Array(values.length).fill(sentAvg),
                 type: "line",
                 borderDash: [5, 5],
                 borderColor: "#FF8F8F",
@@ -76,8 +84,8 @@ const BarChart = ({ props }) => {
                 pointRadius: 0,
             },
             {
-                label: `Average Income`,
-                data: Array(transHistory.date.length).fill(incomeAvg),
+                label: `Average Receive`,
+                data: Array(values.length).fill(receiveAvg),
                 type: "line",
                 borderDash: [5, 5],
                 borderColor: "#86A789",
@@ -90,7 +98,7 @@ const BarChart = ({ props }) => {
 
         // Set chart data
         setChartData(data);
-    }, [props]);
+    }, [nodes, links]);
 
     // Render BarChart component
     return (

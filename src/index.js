@@ -1,26 +1,23 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import ReactDOM from 'react-dom';
+import { BrowserRouter, Routes, Route, Switch } from 'react-router-dom';
 import './styles/index.css';
 import App from './App';
 import Account from './components/Account';
 import reportWebVitals from './reportWebVitals';
-import { Route, Routes } from 'react-router';
+import { Neo4jProvider, createDriver } from 'use-neo4j';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<App />}>
-          <Route key="account" path=':id' element={<Account />} />
+          <Route key="account" path='/addresses/:id' element={<Account />} />
         </Route>
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
