@@ -14,7 +14,7 @@ const Search = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Navigate to the specified wallet address route
-        navigate(`/${searchValue}`);
+        navigate(`/addresses/${searchValue}`);
     };
 
     // Handle input value change
