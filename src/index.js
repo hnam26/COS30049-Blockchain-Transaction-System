@@ -5,7 +5,6 @@ import './styles/index.css';
 import App from './App';
 import Account from './components/Account';
 import reportWebVitals from './reportWebVitals';
-import { Neo4jProvider, createDriver } from 'use-neo4j';
 
 ReactDOM.render(
   <React.StrictMode>
