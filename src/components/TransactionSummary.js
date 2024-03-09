@@ -1,6 +1,23 @@
 import React from "react";
 import Summary from "../styles/summary.css";
-const TransactionSummary = ({ summary }) => {
+import { useParams } from "react-router-dom";
+const TransactionSummary = ({ props: { nodes, links } }) => {
+  var summary = {
+    totalTransactions: 0,
+    totalSent: 0,
+    totalReceived: 0
+  };
+  const params = useParams();
+  const id = params.id;
+  links.forEach(link => {
+    summary.totalTransactions += 1;
+
+    if (link.source === id) {
+      summary.totalSent += +link.value; // Increase the sent value by the amount of link.value
+    } else {
+      summary.totalReceived += +link.value;
+    }
+  });
   // Render summary section
   return (
     <section className="transaction-summary">

@@ -12,7 +12,6 @@ import Navbar from './components/Navbar';
 import Search from './components/Search';
 import Footer from './components/Footer';
 import { Outlet, useOutlet } from 'react-router-dom';
-
 const App = () => {
   // Check if there are any child routes inside Outlet
   const outlet = useOutlet();
