@@ -224,3 +224,47 @@
         opacity: 0;
     }
 }
+
+
+.loading .line,
+.loading .avatar {
+    background: #ddd;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.loading .avatar {
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+}
+
+.loading .format-address {
+    width: 10rem;
+    background: #ddd;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.loading .qr-background {
+    cursor: auto;
+    background: #ddd;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.loading .balance-frame {
+    background: #ddd;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        background-color: #ddd;
+    }
+
+    50% {
+        background-color: #eee;
+    }
+
+    100% {
+        background-color: #ddd;
+    }
+}
