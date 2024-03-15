@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import BarChart from "./BarChart";
 import TransactionsTable from "./TransactionsTable";
 import TransactionsTableSke from "./skeleton/TransactionsTableSke";
@@ -7,7 +7,7 @@ import TransactionSummary from "./TransactionSummary";
 import TransactionSummarySke from "./skeleton/TransactionSumSke";
 import UserInfo from "./UserInfo";
 import UserInfoSke from "./skeleton/UserInfoSkeleton";
-import HandleRevenueError from "./ErrorHandler";
+import HandleError from "./ErrorHandler";
 import GraphNode from "./GraphNode";
 import axios from 'axios';
 import { ProcessGraphData } from "../data/Process";
@@ -23,6 +23,7 @@ const Account = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [showWalletContent, setShowWalletContent] = useState(true);
+    const navigate = useNavigate();
     useEffect(() => {
         // Fetch api for graph node
         axios.get(`/addresses/${id}`).then(response => {
@@ -69,7 +70,7 @@ const Account = () => {
                 setLoading(false);
             }))
             .catch(errors => {
-                console.log("error at summary", error.message);
+                console.log("error at summary", errors.message);
                 // react on errors.
                 setError(errors);
             });
@@ -80,7 +81,23 @@ const Account = () => {
     }, [id]);
 
 
-    if (error) return <div>Error {error.message}</div>; //can not connect database
+    // Cannot connect to database
+    if (error) {
+        
+        // Determine the error type based on the error message or status code
+        if (error.message && error.message.includes("404")) {
+            navigate('/error/404');
+        } else if (error.message && error.message.includes("500")) {
+            navigate('/error/500');
+        } else {
+            return (
+                <>
+                    <HandleError />
+                </>
+            );
+        }
+        return <div>Error {error.message}</div>
+    }
 
     const handlePages = (pages, plus) => {
         const newPages = pages + 1 * plus;
@@ -93,6 +110,7 @@ const Account = () => {
 
     // Can connect to database
     if ((graphData.nodes.length !== 0 && !loading) || loading) {
+    {
         return (
             <>
                 {summary ? <UserInfo summary={summary} /> : <UserInfoSke />}
@@ -145,12 +163,11 @@ const Account = () => {
             </>
         );
     }
-    else return (
+    } else return (
         <>
-            <HandleRevenueError />
+            <HandleError />
             <div style={{ width: "100%", height: "40vh" }}></div>
         </>
     );
-
 };
 export default Account;

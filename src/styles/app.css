@@ -30,7 +30,7 @@
 
 
 /* Error styles */
-.revenueError {
+.error {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,6 +42,14 @@
 
   transform: translateY(-10px);
   animation: bounce 0.5s ease-in-out forwards;
+}
+
+.error404, .error500 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 /* Animation keyframes for error message */
@@ -58,16 +66,45 @@
 }
 
 /* Styles for error message image */
-.revenueError img {
+.error img {
   max-width: 20px;
   margin-right: 10px;
 }
 
+.error404 .error-image, .error500 .error-image {
+  max-width: 200px;
+  margin-bottom: 20px;
+}
+
 /* Styles for error message text */
-.revenueError p {
-  color: #cc0000;
+.error-title {
+  font-size: 24px;
   font-weight: bold;
-  margin: 0;
+  margin-bottom: 10px;
+}
+
+.error-message {
+  font-size: 18px;
+  text-align: center;
+}
+
+/* Styles for error button */
+.error-button {
+  background-color: #ed1c2e;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.4s ease-out;
+    border: 1px solid transparent;
+}
+
+.error-button:hover {
+  background-color: #fff;
+    color: #ed1c2e;
+    border: #ed1c2e 1px solid;
 }
 
 @media only screen and (max-width: 768px) {
