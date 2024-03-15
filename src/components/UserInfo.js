@@ -2,40 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import avatar from "../assets/images/avatar.png";
 import UserInfoCss from "../styles/user-info.css";
-const UserInfo = ({ props: { nodes, links } }) => {
+const UserInfo = ({ summary }) => {
     const [showPopup, setShowPopup] = useState(false);
     const params = useParams();
-    const node = nodes.find(node => node.id == params.id);
+    const node = params.id;
     const shortenNodeId = (nodeId) => {
-        if (typeof nodeId !== 'string' || nodeId.length < 6) {
-            throw new Error('Invalid input. Expected a string with length greater than or equal to 6.');
-        }
-
         const firstThreeLetters = nodeId.slice(2, 5);
         const lastThreeLetters = nodeId.slice(-3);
-
         return firstThreeLetters + lastThreeLetters;
     };
 
-    const bitcoinToDollars = (bitcoinAmount, bitcoinToDollarRate) => {
+    const ethToDollars = (ethcoinAmount, rate) => {
         // Convert Bitcoin to dollars using the provided rate
-        const dollars = bitcoinAmount * bitcoinToDollarRate;
+        const dollars = ethcoinAmount * rate;
         return dollars;
     };
-
-
-    function calculateTotal(links) {
-        var total = 0;
-        links.forEach(link => {
-            if (link.source == params.id) {
-                total += parseFloat(link.value);
-            } else {
-                total -= parseFloat(link.value);
-            }
-
-        });
-        return total;
-    }
 
     const handleCopyToClipboard = () => {
         // Copy the content of node.id to the clipboard
@@ -68,7 +49,7 @@ const UserInfo = ({ props: { nodes, links } }) => {
 
                 {/* User information content */}
                 <div className="content">
-                    <p> {node ? shortenNodeId(node.id) : "Undefined"}</p>
+                    <p> {shortenNodeId(node)}</p>
                     {/* Format address details */}
                     <div className="format-address">
                         <div className="format-address-icon"></div>
@@ -85,7 +66,7 @@ const UserInfo = ({ props: { nodes, links } }) => {
                         <div style={{ display: "flex", flexDirection: "column" }}>
                             <p style={{ fontSize: "0.9rem", fontWeight: "600", marginBottom: "0.1rem" }}>Bitcoin Address</p>
                             <div className="qr-content">
-                                <span>{node ? node.id : "Undefined"}</span>
+                                <span>{node}</span>
                                 <div className="copy-icon"></div>
                             </div>
                         </div>
@@ -95,11 +76,11 @@ const UserInfo = ({ props: { nodes, links } }) => {
                 {/* Balance section*/}
                 <div className="balance-frame">
                     <div className="balance-info">
-                        <div className="balance-header">Bitcoin Balance</div>
+                        <div className="balance-header">ETH Balance</div>
                         <div className="balance-data">
-                            <span className="balance-wallet">{links ? calculateTotal(links) : ""} BTC</span>
+                            <span className="balance-wallet">{+summary.receive - summary.sent} ETH</span>
                             <span className="dot">•</span>
-                            <span className="covert-dollar">${links ? bitcoinToDollars(calculateTotal(links), 40000) : ""}</span>
+                            <span className="covert-dollar">${ethToDollars(+summary.receive - summary.sent, 40000)}</span>
                         </div>
                     </div>
                 </div>

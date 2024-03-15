@@ -9,7 +9,7 @@
 /* Styles for transaction summary heading */
 .transaction-summary h2 {
     text-align: center;
-    width: 10%;
+    /* width: 10%; */
 }
 
 /* Styles for summary stats container */
@@ -24,9 +24,38 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 33.3%;
+}
+
+.summary-stat p {
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.summary-stat span {
+    word-wrap: break-word;
+    width: 100%;
+    text-align: center;
+}
+
+
+.loading .summary-title {
+    border-radius: 1rem;
+    width: 10em;
+    height: 32px;
+    background: #ddd;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.loading .summary-stat {
+    width: 30%;
+    border-radius: 1rem;
+    background: #ddd;
+    animation: pulse 1.5s infinite ease-in-out;
 }
 
 @media screen and (max-width: 768px) {
+
     /* Styles for transaction summary container in mobile view */
     .transaction-summary {
         width: 100%;
@@ -41,5 +70,28 @@
     /* Styles for summary stats container in mobile view */
     .summary-stats {
         flex-direction: column;
+    }
+
+    .summary-stat {
+        width: 100%;
+    }
+
+    .loading .summary-stat {
+        margin-top: 1rem;
+        width: 100%;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        background-color: #ddd;
+    }
+
+    50% {
+        background-color: #eee;
+    }
+
+    100% {
+        background-color: #ddd;
     }
 }

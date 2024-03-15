@@ -1,5 +1,5 @@
 import React from "react";
-
+import "../styles/transactionstable.css";
 const TransactionsTable = ({ props: { nodes, links } }) => {
   const sortLinks = [...links].sort((a, b) => a.block_timestamp - b.block_timestamp);
   return (
@@ -9,7 +9,6 @@ const TransactionsTable = ({ props: { nodes, links } }) => {
       <table className="transactions-table">
         <thead>
           <tr>
-            {/* <th></th> */}
             <th>Sender</th>
             <th>Receiver</th>
             <th>Amount</th>

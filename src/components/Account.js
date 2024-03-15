@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import BarChart from "./BarChart";
 import TransactionsTable from "./TransactionsTable";
+import TransactionsTableSke from "./skeleton/TransactionsTableSke";
 import TransactionSummary from "./TransactionSummary";
+import TransactionSummarySke from "./skeleton/TransactionSumSke";
 import UserInfo from "./UserInfo";
+import UserInfoSke from "./skeleton/UserInfoSkeleton";
 import HandleError from "./ErrorHandler";
 import GraphNode from "./GraphNode";
 import axios from 'axios';
@@ -12,35 +15,75 @@ import accountcss from "../styles/account.css";
 const Account = () => {
     const params = useParams();
     const id = params.id;
-    // Define state variables for node, transHistory, transData, summary, and transactions
-    // const { loading, error, result, run } = useReadCypher('MATCH (n {addressId: $id})-[r]-(m) RETURN DISTINCT n,m,r', { id });
+    const pageStep = 10;
+    const [pages, setPages] = useState(1);
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
+    const [tableData, setTabelData] = useState({ nodes: [], links: [] });
+    const [summary, setSummary] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [showWalletContent, setShowWalletContent] = useState(true);
     const navigate = useNavigate();
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`/addresses/${id}`);
-                const values = ProcessGraphData(response.data);
-                setGraphData({
-                    nodes: values.nodes,
-                    links: values.links
+        // Fetch api for graph node
+        axios.get(`/addresses/${id}`).then(response => {
+            const values = ProcessGraphData(response.data);
+            setGraphData({
+                nodes: values.nodes,
+                links: values.links
+            });
+            setLoading(false);
+        }).catch(error => {
+            console.log("error at all", error.message);
+            setError(error);
+        });
+
+        // Fetch api for table transaction
+        axios.get(`/addresses/${id}?pages=${pages}`).then(response => {
+            const values = ProcessGraphData(response.data);
+            setTabelData({
+                nodes: values.nodes,
+                links: values.links
+            });
+            setLoading(false);
+        }).catch(error => {
+            console.log("error at table", error.message);
+            setError(error);
+        });
+        // Fetch api for sent coin and receive coin paralel
+        let urls = [`/addresses/${id}?sent=true`, `/addresses/${id}?receive=true`];
+        let requests = urls.map(url => axios.get(url));
+        Promise.all(requests)
+            .then(axios.spread((sentResponse, receiveResponse) => {
+                var sent = sentResponse.data.coin;
+                var receive = receiveResponse.data.coin;
+                var totalCount = +sentResponse.data.count + +receiveResponse.data.count;
+                var sents = sentResponse.data.sents;
+                var receives = receiveResponse.data.receives;
+                setSummary({
+                    sent: sent,
+                    receive: receive,
+                    totalCount: totalCount,
+                    sents: sents,
+                    receives: receives
                 });
                 setLoading(false);
-            } catch (error) {
-                console.log(error);
-                setError(error);
-                setLoading(false);
-            }
-        };
-        setShowWalletContent(true);
-        fetchData();
+            }))
+            .catch(errors => {
+                console.log("error at summary", errors.message);
+                // react on errors.
+                setError(errors);
+            });
+        setSummary(null);
+        setLoading(true);
+        setTabelData({ nodes: [], links: [] });
+        setGraphData({ nodes: [], links: [] });
     }, [id]);
-    if (loading) return <div>Loading</div>;
+
+
+    // Cannot connect to database
     if (error) {
-    
+        
         // Determine the error type based on the error message or status code
         if (error.message && error.message.includes("404")) {
             navigate('/error/404');
@@ -53,11 +96,24 @@ const Account = () => {
                 </>
             );
         }
+        return <div>Error {error.message}</div>
     }
-    if (graphData.nodes.length !== 0) {
+
+    const handlePages = (pages, plus) => {
+        const newPages = pages + 1 * plus;
+        setTabelData({
+            nodes: graphData.nodes,
+            links: graphData.links.slice((newPages - 1) * pageStep, (newPages - 1) * pageStep + pageStep)
+        });
+        setPages(newPages);
+    };
+
+    // Can connect to database
+    if ((graphData.nodes.length !== 0 && !loading) || loading) {
+    {
         return (
             <>
-                <UserInfo props={{ ...{ nodes: graphData.nodes, links: graphData.links } }} />
+                {summary ? <UserInfo summary={summary} /> : <UserInfoSke />}
                 <div className="userSelect">
                     <button className={"buttonToggle" + (showWalletContent ? " active" : "")} onClick={() => setShowWalletContent(true)}>Wallet</button>
                     <button className={"buttonToggle" + (!showWalletContent ? " active" : "")} onClick={() => setShowWalletContent(false)}>Chart</button>
@@ -67,13 +123,35 @@ const Account = () => {
                         <div style={{ width: "95%" }}>
                             <div className="chart-summary-frame">
                                 <div className="bar">
-                                    <BarChart props={{ ...{ nodes: graphData.nodes, links: graphData.links } }} />
+                                    {summary ? <BarChart summary={summary} /> : <></>}
                                 </div>
                                 <div className="summary">
-                                    <TransactionSummary props={{ ...{ nodes: graphData.nodes, links: graphData.links } }} />
+                                    {summary ? <TransactionSummary summary={summary} /> : <TransactionSummarySke />}
                                 </div>
                             </div>
-                            <TransactionsTable props={{ ...{ nodes: graphData.nodes, links: graphData.links } }} />
+                            {tableData.nodes.length != 0 ? <TransactionsTable props={{ ...{ nodes: tableData.nodes, links: tableData.links } }} /> : <TransactionsTableSke />}
+                        </div>
+                        <div>
+                            {
+                                pages == 1 ?
+                                    <>
+                                        <button onClick={() => handlePages(pages, 0)}>{+pages}</button>
+                                        <button onClick={() => handlePages(pages, 1)}>{+pages + 1}</button>
+                                    </>
+                                    : pages < Math.floor(summary.totalCount / 10) ?
+                                        <>
+                                            <button onClick={() => handlePages(pages, -1)}>{+pages - 1}</button>
+                                            <button onClick={() => handlePages(pages, 0)}>{+pages}</button>
+                                            <button onClick={() => handlePages(pages, 1)}>{+pages + 1}</button>
+                                        </>
+                                        :
+                                        <>
+                                            <button onClick={() => handlePages(pages, -1)}>{+pages - 1}</button>
+                                            <button onClick={() => handlePages(pages, 0)}>{+pages}</button>
+
+                                        </>
+
+                            }
                         </div>
                     </>
                 ) : (
@@ -85,53 +163,11 @@ const Account = () => {
             </>
         );
     }
-    else return (
+    } else return (
         <>
             <HandleError />
             <div style={{ width: "100%", height: "40vh" }}></div>
         </>
     );
-
-    // Render the JSX based on the fetched data
-    // return (
-    //     <>
-    //         {data.node ? (
-    //             <>
-
-    //                 <UserInfo props={{ nodes: data.node, summary: data.summary }} />
-    //                 <div className="userSelect">
-    //                     <button className={"buttonToggle" + (showWalletContent ? " active" : "")} onClick={() => setShowWalletContent(true)}>Wallet</button>
-    //                     <button className={"buttonToggle" + (!showWalletContent ? " active" : "")} onClick={() => setShowWalletContent(false)}>Chart</button>
-    //                 </div>
-    //                 {showWalletContent ? (
-
-    //                     <div style={{ width: "95%", padding: "0px 80px" }}>
-    //                         <div className="chart-summary-frame">
-    //                             <div className="bar">
-    //                                 <BarChart props={data.transHistory} />
-    //                             </div>
-    //                             <div className="summary">
-    //                                 <TransactionSummary summary={data.summary} />
-    //                             </div>
-    //                         </div>
-    //                         <TransactionsTable transactions={data.transactions} />
-    //                     </div>
-    //                 ) : (
-    //                     <>
-    //                         <TransactionGraph data={transData} />
-    //                     </>
-    //                 )}
-    //             </>
-    //         ) : (
-    //             // Render error handler component if node data is not available
-    //             <>
-    //                 <HandleRevenueError />
-    //                 <TestRetrieving walletId={params.id} />
-    //                 <TestGraph2D walletId={params.id} />
-    //             </>
-    //         )}
-    //     </>
-    // );
-
 };
 export default Account;

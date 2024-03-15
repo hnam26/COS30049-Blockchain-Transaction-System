@@ -28,48 +28,6 @@
   flex-direction: column;
 }
 
-/* Styles for the transactions table */
-.transactions-table {
-  width: 100%;
-  margin: 30px 0;
-  border-collapse: collapse;
-}
-
-/* Styles for table headers and cells */
-.transactions-table th,
-.transactions-table td {
-  padding: 8px;
-  text-align: center;
-}
-
-/* Styles for table header cells */
-.transactions-table th {
-  background-color: #FF8080;
-  font-weight: bold;
-  color: white;
-}
-
-/* Styles for rounded corners on first and last header cells */
-.transactions-table th:first-child {
-  border-top-left-radius: 8px;
-}
-
-.transactions-table th:last-child {
-  border-top-right-radius: 8px;
-}
-
-/* Styles for table data cells */
-.transactions-table td {
-  border: 1px solid #e0dfdf;
-  border-left: none;
-  border-right: none;
-}
-
-/* Styles for table row on hover */
-.transactions-table tr:hover {
-  background-color: #f0f0f0;
-  /* Change background color on hover */
-}
 
 /* Error styles */
 .error {
@@ -96,6 +54,7 @@
 
 /* Animation keyframes for error message */
 @keyframes bounce {
+
   from,
   to {
     transform: translateY(0);
@@ -149,15 +108,16 @@
 }
 
 @media only screen and (max-width: 768px) {
-  
+
   /* Styles for the transaction table section in mobile view */
   .transactions-table {
     overflow-x: auto;
     white-space: nowrap;
     display: block;
   }
-  
-  .transactions-table th, .transactions-table td {
+
+  .transactions-table th,
+  .transactions-table td {
     white-space: nowrap;
     /* display: inline-block; */
   }

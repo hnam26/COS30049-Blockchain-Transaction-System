@@ -197,7 +197,7 @@ const GraphNode = ({ props: { nodes, links } }) => {
                 linkWidth="width"
                 linkCurvature="curvature"
                 linkCurveRotation="rotation"
-                linkDirectionalArrowLength={1}
+                linkDirectionalArrowLength={5}
                 linkDirectionalArrowRelPos={0.5}
                 linkColor={link => {
                     return "black";
