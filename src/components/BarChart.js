@@ -5,8 +5,109 @@ import "../styles/chart.css";
 import { ProcessBarData } from "../data/Process";
 import { useParams } from "react-router-dom";
 // BarChart component
-const BarChart = ({ props: { nodes, links } }) => {
-    const params = useParams();
+const BarChart = ({ summary }) => {
+
+    const [dayTime, setDayTime] = useState(7);
+    // Sort the arrays based on 'block_timestamp'
+    summary.sents.sort((a, b) => b.block_timestamp - a.block_timestamp);
+    summary.receives.sort((a, b) => b.block_timestamp - a.block_timestamp);
+    const groupData = (sents, receives, days) => {
+        let result = {};
+        let date = null;
+        if (sents.length != 0 && receives.length != 0) {
+            // Both timestamps exist, compare them
+            if (sents[0].block_timestamp > receives[0].block_timestamp) {
+                date = new Date(sents[0].block_timestamp * 1000);
+            } else {
+                date = new Date(receives[0].block_timestamp * 1000);
+            }
+        } else if (sents.length != 0) {
+            // Only sents timestamp exists
+            date = new Date(sents[0].block_timestamp * 1000);
+        } else if (receives.length != 0) {
+            // Only receives timestamp exists
+            date = new Date(receives[0].block_timestamp * 1000);
+        } else {
+            date = new Date();
+        }
+
+
+        switch (days) {
+            case 7:
+                date.setHours(23, 59, 59, 999);
+                date.setDate(date.getDate() - days);
+                for (let i = 0; i < 7; i++) {
+                    let dateNow = new Date(date.getTime() + 24 * 60 * 60 * 1000);
+                    let day = `${dateNow.getDate()}/${dateNow.getMonth() + 1}/${dateNow.getFullYear()}`;
+                    let sentValue = sents
+                        .filter(t => t.block_timestamp * 1000 >= date.getTime() && t.block_timestamp * 1000 <= date.getTime() + 24 * 60 * 60 * 1000)
+                        .reduce((total, t) => +total + 1, 0);
+                    let receiveValue = receives
+                        .filter(t => t.block_timestamp * 1000 >= date.getTime() && t.block_timestamp * 1000 <= date.getTime() + 24 * 60 * 60 * 1000)
+                        .reduce((total, t) => +total + 1, 0);
+                    result[day] = { sent: sentValue, receive: receiveValue };
+                    date.setDate(date.getDate() + 1);
+                }
+                break;
+            case 28:
+                date.setDate(date.getDate() - date.getDay() + 7);
+                date.setHours(23, 59, 59, 999); // Set the time to the end of the day
+                // Then, go back 28 days from that date
+                date.setDate(date.getDate() - 28);
+                for (let i = 0; i < 4; i++) {
+                    let startDate = new Date(date.getTime());
+                    let endDate = new Date(date.getTime() + 7 * 24 * 60 * 60 * 1000);
+                    let week = `${startDate.getDate()}/${startDate.getMonth() + 1}/${startDate.getFullYear()} - ${endDate.getDate()}/${endDate.getMonth() + 1}/${endDate.getFullYear()}`;
+                    let sentValue = sents
+                        .filter(t => t.block_timestamp * 1000 >= date.getTime() && t.block_timestamp * 1000 <= date.getTime() + 7 * 24 * 60 * 60 * 1000)
+                        .reduce((total, t) => total + 1, 0);
+                    let receiveValue = receives
+                        .filter(t => t.block_timestamp * 1000 >= date.getTime() && t.block_timestamp * 1000 <= date.getTime() + 7 * 24 * 60 * 60 * 1000)
+                        .reduce((total, t) => total + 1, 0);
+                    result[week] = { sent: sentValue, receive: receiveValue };
+                    date.setDate(date.getDate() + 7);
+                }
+                break;
+            case 30 * 12:
+                // First, set the date to the last day of the current month
+                date.setMonth(date.getMonth() + 1, 0);
+                date.setHours(23, 59, 59, 999); // Set the time to the end of the day
+
+                // Then, go back 12 months from that date
+                date.setFullYear(date.getFullYear() - 1);
+                for (let i = 0; i < 12; i++) {
+                    let month = `${date.getMonth() + 1}/${date.getFullYear()}`;
+                    let sentValue = sents
+                        .filter(t => t.block_timestamp * 1000 >= date.getTime() && t.block_timestamp * 1000 <= date.getTime() + 30 * 24 * 60 * 60 * 1000)
+                        .reduce((total, t) => total + 1, 0);
+                    let receiveValue = receives
+                        .filter(t => t.block_timestamp * 1000 >= date.getTime() && t.block_timestamp * 1000 <= date.getTime() + 30 * 24 * 60 * 60 * 1000)
+                        .reduce((total, t) => total + 1, 0);
+                    result[month] = { sent: sentValue, receive: receiveValue };
+                    date.setMonth(date.getMonth() + 1);
+                }
+                break;
+        }
+
+        return result;
+    };
+    var labels = [];
+    var sentData = [];
+    var receiveData = [];
+    if (summary) {
+        var results = groupData(summary.sents, summary.receives, dayTime);
+
+        for (let key in results) {
+            if (results.hasOwnProperty(key)) { // This check is necessary to skip keys from the prototype chain
+                labels.push(key);
+            }
+            // console.log(results[key]);
+            sentData.push(results[key].sent);
+            receiveData.push(results[key].receive);
+        }
+    }
+
+
     // Chart options
     const options = {
         responsive: true,
@@ -28,7 +129,7 @@ const BarChart = ({ props: { nodes, links } }) => {
                 beginAtZero: true,
                 title: {
                     display: "true",
-                    text: "$",
+                    text: "Amount",
                     font: {
                         size: "20",
                     }
@@ -42,75 +143,41 @@ const BarChart = ({ props: { nodes, links } }) => {
         }
     };
 
-    // State for chart data
-    const [chartData, setChartData] = useState(null);
-    const values = ProcessBarData(links, params.id);
-    // useEffect to update chart data
-    useEffect(() => {
-
-        var sent = 0;
-        values.forEach(value => {
-            sent += +value.sent;
-        });
-        const sentAvg = sent / values.length;
-        var receive = 0;
-        values.forEach(value => {
-            receive += value.receive;
-        });
-        const receiveAvg = receive / values.length;
-        // Chart data
-        const data = {
-            labels: values.map((value) => value.date),
-            datasets: [{
-                label: "Sent",
-                data: values.map((value) => +value.sent),
-                backgroundColor: "#F6D6D6",
-                order: "1",
-            },
-            {
-                label: "Receive",
-                data: values.map((value) => +value.receive),
-                backgroundColor: "#B7E5B4",
-                order: "1",
-            },
-            {
-                label: `Average Sent`,
-                data: Array(values.length).fill(sentAvg),
-                type: "line",
-                borderDash: [5, 5],
-                borderColor: "#FF8F8F",
-                order: "0",
-                pointStyle: 'circle',
-                pointRadius: 0,
-            },
-            {
-                label: `Average Receive`,
-                data: Array(values.length).fill(receiveAvg),
-                type: "line",
-                borderDash: [5, 5],
-                borderColor: "#86A789",
-                order: "0",
-                pointStyle: 'circle',
-                pointRadius: 0,
-            },
-            ],
-        };
-
-        // Set chart data
-        setChartData(data);
-    }, [nodes, links]);
+    // Chart data
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: "Sent",
+            data: sentData,
+            backgroundColor: "#F6D6D6",
+            order: "1",
+        },
+        {
+            label: "Receive",
+            data: receiveData,
+            backgroundColor: "#B7E5B4",
+            order: "1",
+        },
+        ],
+    };
 
     // Render BarChart component
     return (
-        <div className="chartTransaction">
-            {/* Render Bar component with chart data and options */}
-            {chartData && (
+        <>
+            <div className="chartTransaction">
+                {/* Render Bar component with chart data and options */}
                 <Bar
-                    data={chartData}
+                    data={data}
                     options={options}
                 />
-            )}
-        </div >
+
+            </div >
+            <div className="divBut">
+                <button onClick={() => setDayTime(7)}>7 days</button>
+                <button onClick={() => setDayTime(28)} >4 weeks</button>
+                <button onClick={() => setDayTime(30 * 12)}>12 months</button>
+            </div>
+        </>
     );
 };
 
