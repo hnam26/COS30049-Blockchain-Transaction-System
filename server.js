@@ -27,6 +27,7 @@ app.get('/addresses/:id', async (req, res) => {
         });
         res.send(records);
     } catch (error) {
+        console.log(error)
         res.status(500).send(error);
     } finally {
         await session.close();

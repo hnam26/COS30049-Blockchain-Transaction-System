@@ -1,18 +1,10 @@
 import React from "react";
-import errorImage from "../assets/images/sad.png";
+import Error from "./ErrorPage";
 
-// HandleRevenueError component
-const HandleRevenueError = () => {
-    // Render error message with image
-    return (
-        <div className="revenueError">
-            <img src={errorImage} alt="Error" />
-            <p>
-                Sorry, we couldn't find the result you are looking for.
-            </p>
-        </div>
-    );
+// HandleError component
+const HandleError = () => {
+    return <Error />
 };
 
-// Export HandleRevenueError component
-export default HandleRevenueError;
+// Export HandleError component
+export default HandleError;

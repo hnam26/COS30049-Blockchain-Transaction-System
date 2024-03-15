@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import BarChart from "./BarChart";
 import TransactionsTable from "./TransactionsTable";
 import TransactionSummary from "./TransactionSummary";
 import UserInfo from "./UserInfo";
-import HandleRevenueError from "./ErrorHandler";
+import HandleError from "./ErrorHandler";
 import GraphNode from "./GraphNode";
 import axios from 'axios';
 import { ProcessGraphData } from "../data/Process";
@@ -18,6 +18,7 @@ const Account = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [showWalletContent, setShowWalletContent] = useState(true);
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -30,7 +31,7 @@ const Account = () => {
                 setLoading(false);
             } catch (error) {
                 console.log(error);
-                setError(error.message);
+                setError(error);
                 setLoading(false);
             }
         };
@@ -38,7 +39,21 @@ const Account = () => {
         fetchData();
     }, [id]);
     if (loading) return <div>Loading</div>;
-    if (error) return <div>Error: {error.message}</div>;
+    if (error) {
+    
+        // Determine the error type based on the error message or status code
+        if (error.message && error.message.includes("404")) {
+            navigate('/error/404');
+        } else if (error.message && error.message.includes("500")) {
+            navigate('/error/500');
+        } else {
+            return (
+                <>
+                    <HandleError />
+                </>
+            );
+        }
+    }
     if (graphData.nodes.length !== 0) {
         return (
             <>
@@ -72,7 +87,7 @@ const Account = () => {
     }
     else return (
         <>
-            <HandleRevenueError />
+            <HandleError />
             <div style={{ width: "100%", height: "40vh" }}></div>
         </>
     );
