@@ -24,10 +24,11 @@ const Search = () => {
 
     // Render Search component
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='formSearch'>
             <label htmlFor="search">Search</label>
             {/* Input for entering wallet address */}
             <input
+                className='search-input'
                 type="text"
                 value={searchValue}
                 onChange={handleChange}

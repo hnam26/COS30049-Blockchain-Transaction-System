@@ -79,8 +79,8 @@ const UserInfo = ({ summary }) => {
                         <div className="balance-header">ETH Balance</div>
                         <div className="balance-data">
                             <span className="balance-wallet">{+summary.receive - summary.sent} ETH</span>
-                            <span className="dot">•</span>
-                            <span className="covert-dollar">${ethToDollars(+summary.receive - summary.sent, 40000)}</span>
+                            {/* <span className="dot">•</span> */}
+                            {/* <span className="covert-dollar">${ethToDollars(+summary.receive - summary.sent, 3739.81)}</span> */}
                         </div>
                     </div>
                 </div>

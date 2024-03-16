@@ -16,11 +16,13 @@ app.get('/addresses/:id', async (req, res) => {
     const pages = req.query.pages;
     const sent = req.query.sent;
     const receive = req.query.receive;
-    const limit = 10;
-    const skip = (pages - 1) * limit;
+    const node = req.query.node;
+    const totalPageCount = req.query.totalPageCount;
     // Pagination api
     if (pages) {
         try {
+            const limit = 10;
+            const skip = (pages - 1) * limit;
             const result = await session.run(
                 `MATCH (n {addressId: '${req.params.id}'})-[r]-(m) RETURN DISTINCT n,m,r SKIP ${skip} LIMIT ${limit}`
             );
@@ -41,7 +43,7 @@ app.get('/addresses/:id', async (req, res) => {
         } finally {
             await session.close();
         }
-        // Sent api
+        // Api for getting all sent relationship
     } else if (sent) {
         try {
             const result = await session.run(
@@ -64,7 +66,7 @@ app.get('/addresses/:id', async (req, res) => {
         } finally {
             await session.close();
         }
-        // Receive api
+        // Api for getting all receive relationship
     } else if (receive) {
         try {
             const result = await session.run(
@@ -74,7 +76,6 @@ app.get('/addresses/:id', async (req, res) => {
             var receiveCoin = 0;
             var receives = [];
             result.records.forEach(r => {
-                console.log(r);
                 count += 1;
                 receiveCoin += +r.get(0);
                 receives.push({
@@ -83,6 +84,35 @@ app.get('/addresses/:id', async (req, res) => {
                 });
             });
             res.send({ coin: receiveCoin, count: count, receives: receives });
+        } catch (error) {
+            res.status(500).send(error);
+        } finally {
+            await session.close();
+        }
+    }
+    // get is node
+    else if (node) {
+        try {
+            const result = await session.run('MATCH (n {addressId: $id}) RETURN DISTINCT n', { id: req.params.id });
+            console.log(result);
+            if (result.records.length != 0) {
+                const n = result.records[0].get('n');
+                res.send(n);
+            }
+            else {
+                res.send(null);
+            }
+        } catch (error) {
+            res.status(500).send(error);
+        } finally {
+            await session.close();
+        }
+    }
+    else if (totalPageCount) {
+        try {
+            const result = await session.run('MATCH (n {addressId: $id})-[r]-(m) RETURN COUNT(DISTINCT r) AS count_r', { id: req.params.id });
+            const pageTotal = result.records[0].get('count_r').toNumber();
+            res.send({ pageTotal: pageTotal });
         } catch (error) {
             res.status(500).send(error);
         } finally {

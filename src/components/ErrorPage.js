@@ -6,10 +6,10 @@ import { useParams, useNavigate } from "react-router-dom";
 const Error = () => {
   const params = useParams();
   const error = params.error;
-  console.log(error)
+  // console.log(error)
   const navigate = useNavigate();
   const redirectToAccountPage = () => {
-    navigate('/'); 
+    navigate('/');
   };
 
 
@@ -34,7 +34,8 @@ const Error = () => {
     return (
       <div className="error">
         <img className="error-image" src={errorImage} alt="Error" />
-        <p className="error-message">Uh oh, something went wrong</p>
+        <p className="error-message">
+          Oops. The address you are looking for isn't available. Maybe trying another one?</p>
       </div>
     );
   }
