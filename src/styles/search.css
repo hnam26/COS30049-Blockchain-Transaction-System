@@ -132,3 +132,15 @@ label {
     opacity: 1;
   }
 }
+
+@media only screen and (max-width: 768px) {
+  .formSearch {
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 570px) {
+  .formSearch {
+    width: 80%;
+  }
+}

@@ -45,7 +45,7 @@ const GraphNode = ({ props: { nodes, links } }) => {
 
     const fetchData = async (id) => {
         try {
-            const response = await axios.get(`/addresses/${id}`);
+            const response = await axios.get(`/addresses/${id}?all=true`);
             var nodes = [...graphData.nodes];
             var links = [...graphData.links];
             const values = ProcessGraphData(response.data, [...nodes], [...links]);
@@ -206,16 +206,14 @@ const GraphNode = ({ props: { nodes, links } }) => {
 
 
                     }}
-                    onNodeRightClick={(node) => {
-                        var isIDSearched = nodeIDs.some(nodeID => nodeID === node.id);
-                        if (!isIDSearched) {
-                            nodeIDs.push(node.id);
-                            fetchData(node.id);
-
-                        }
-                    }}
                     onNodeClick={node => {
-
+                        // var isIDSearched = nodeIDs.some(nodeID => nodeID === node.id);
+                        // if (!isIDSearched) {
+                        //     nodeIDs.push(node.id);
+                        //     fetchData(node.id);
+                        //     console.log("fetch node", node.id);
+                        // }
+                        fetchData(node.id);
                     }}
 
                     linkLabel={link => {

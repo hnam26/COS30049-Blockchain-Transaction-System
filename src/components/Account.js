@@ -27,89 +27,99 @@ const Account = () => {
     const [showWalletContent, setShowWalletContent] = useState(true);
     const navigate = useNavigate();
     useEffect(() => {
+        setLoading(true);
+        setNode(null);
+        setSummary(null);
+        setTabelData(null);
+        setGraphData(null);
 
-        // Fetch api for node
-        axios.get(`/addresses/${id}?node=true`).then(response => {
+        const fetchNode = axios.get(`/addresses/${id}?node=true`).then(response => {
             const node = response.data;
             setNode(node);
             setLoading(false);
+            return 'node';
         }).catch(error => {
             console.log("error at node", error.message);
             setError(error);
         });
 
-        // Fetch api for total page
-        axios.get(`/addresses/${id}?totalPageCount=true`).then(response => {
+        const fetchTotalPage = axios.get(`/addresses/${id}?totalPageCount=true`).then(response => {
             let pageTotal = Math.floor(+response.data.pageTotal / +pageStep) + 1;
             setTotalPage(+pageTotal);
             setLoading(false);
+            return 'totalPage';
         }).catch(error => {
             console.log("error at total page", error.message);
             setError(error);
         });
 
-        // Fetch api for graph node
-        axios.get(`/addresses/${id}`).then(response => {
-            const values = ProcessGraphData(response.data);
-            setGraphData({
-                nodes: values.nodes,
-                links: values.links
-            });
-            setLoading(false);
-        }).catch(error => {
-            console.log("error at graph node", error.message);
-            setError(error);
-        });
 
-        // Fetch api for table transaction
-        axios.get(`/addresses/${id}?pages=${1}`).then(response => {
+        const fetchTableTransaction = axios.get(`/addresses/${id}?pages=${1}`).then(response => {
             const values = ProcessGraphData(response.data);
             setTabelData({
                 nodes: values.nodes,
                 links: values.links
             });
             setLoading(false);
+            return 'tableTransaction';
         }).catch(error => {
             console.log("error at table", error.message);
             setError(error);
         });
 
-        // Fetch api for sent coin and receive coin paralel
-        let urls = [`/addresses/${id}?sent=true`, `/addresses/${id}?receive=true`];
-        let requests = urls.map(url => axios.get(url));
-        Promise.all(requests)
-            .then(axios.spread((sentResponse, receiveResponse) => {
-                var sent = sentResponse.data.coin;
-                var receive = receiveResponse.data.coin;
-                var totalCount = +sentResponse.data.count + +receiveResponse.data.count;
-                var sents = sentResponse.data.sents;
-                var receives = receiveResponse.data.receives;
-                setSummary({
-                    sent: sent,
-                    receive: receive,
-                    totalCount: totalCount,
-                    sents: sents,
-                    receives: receives
-                });
-                setLoading(false);
-            }))
-            .catch(errors => {
-                console.log("error at summary", errors.message);
-                // react on errors.
-                setError(errors);
+        const fetchSummary = Promise.all([
+            axios.get(`/addresses/${id}?sent=true`),
+            axios.get(`/addresses/${id}?receive=true`)
+        ]).then(axios.spread((sentResponse, receiveResponse) => {
+            var sent = sentResponse.data.coin;
+            var receive = receiveResponse.data.coin;
+            var totalCount = +sentResponse.data.count + +receiveResponse.data.count;
+            var sents = sentResponse.data.sents;
+            var receives = receiveResponse.data.receives;
+            setSummary({
+                sent: sent,
+                receive: receive,
+                totalCount: totalCount,
+                sents: sents,
+                receives: receives,
             });
-        setNode(null);
-        setSummary(null);
-        setLoading(true);
-        setTabelData(null);
-        setGraphData(null);
+            setLoading(false);
+            return 'coins';
+        })).catch(errors => {
+            console.log("error at summary", errors.message);
+            setError(errors);
+        });
+
+        const fetchGraphNode = axios.get(`/addresses/${id}?all=true`).then(response => {
+            const values = ProcessGraphData(response.data);
+            setGraphData({
+                nodes: values.nodes,
+                links: values.links
+            });
+            setLoading(false);
+            return 'graphNode';
+        }).catch(error => {
+            console.log("error at graph node", error.message);
+            setError(error);
+        });
+
+
+
+
+        const requests = [fetchSummary, fetchTableTransaction, fetchTotalPage, fetchNode, fetchGraphNode];
+        // // const requests = [fetchTableTransaction, fetchGraphNode];
+
+        const results = [];
+        requests.forEach(request => {
+            request.then(result => {
+                results.push(result);
+                console.log(`Completed: ${result}`);
+                console.log(`Order so far: ${results.join(', ')}`);
+            });
+        });
     }, [id]);
 
-    if (node) console.log("Node get");
-    if (graphData) console.log("graphData get");
-    if (tableData) console.log("tableData get");
-    if (summary) console.log("summary get");
-    if (totalPage) console.log("totalPage get");
+
 
 
 
@@ -122,9 +132,12 @@ const Account = () => {
         if (graphData) {
             let start = (pageNumber - 1) * 10;
             let end = start + 10;
+            let sortedLinks = graphData.links.sort((a, b) => b.block_timestamp - a.block_timestamp);
+            let slicedLinks = sortedLinks.slice(start, end);
+
             setTabelData({
                 nodes: graphData.nodes.slice(start, end),
-                links: graphData.links.slice(start, end)
+                links: slicedLinks
             });
         } else {
             // Fetch api for table transaction
@@ -165,7 +178,7 @@ const Account = () => {
         {
             return (
                 <>
-                    {summary ? <UserInfo summary={summary} /> : <UserInfoSke />}
+                    {summary ? <UserInfo summary={summary} node={node} /> : <UserInfoSke />}
                     <div className="userSelect">
                         <button className={"buttonToggle" + (showWalletContent ? " active" : "")} onClick={() => setShowWalletContent(true)}>Wallet</button>
                         <button className={"buttonToggle" + (!showWalletContent ? " active" : "")} onClick={() => setShowWalletContent(false)}>Chart</button>

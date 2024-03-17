@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import avatar from "../assets/images/avatar.png";
 import UserInfoCss from "../styles/user-info.css";
-const UserInfo = ({ summary }) => {
+const UserInfo = ({ summary, node }) => {
     const [showPopup, setShowPopup] = useState(false);
-    const params = useParams();
-    const node = params.id;
+    const nodeId = node.properties.addressId;
+    const type = node.properties.type;
+
     const shortenNodeId = (nodeId) => {
         const firstThreeLetters = nodeId.slice(2, 5);
         const lastThreeLetters = nodeId.slice(-3);
@@ -20,7 +21,7 @@ const UserInfo = ({ summary }) => {
 
     const handleCopyToClipboard = () => {
         // Copy the content of node.id to the clipboard
-        navigator.clipboard.writeText(node.id)
+        navigator.clipboard.writeText(nodeId)
             .then(() => {
                 // Show the popup message
                 setShowPopup(true);
@@ -49,11 +50,11 @@ const UserInfo = ({ summary }) => {
 
                 {/* User information content */}
                 <div className="content">
-                    <p> {shortenNodeId(node)}</p>
+                    <p> {shortenNodeId(nodeId)}</p>
                     {/* Format address details */}
                     <div className="format-address">
                         <div className="format-address-icon"></div>
-                        <span>Legacy</span>
+                        <span>{type}</span>
                     </div>
 
                     {/* QR code section */}
@@ -66,7 +67,7 @@ const UserInfo = ({ summary }) => {
                         <div style={{ display: "flex", flexDirection: "column" }}>
                             <p style={{ fontSize: "0.9rem", fontWeight: "600", marginBottom: "0.1rem" }}>Bitcoin Address</p>
                             <div className="qr-content">
-                                <span>{node}</span>
+                                <span>{nodeId}</span>
                                 <div className="copy-icon"></div>
                             </div>
                         </div>

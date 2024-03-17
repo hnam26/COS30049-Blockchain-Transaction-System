@@ -84,11 +84,26 @@
         flex-direction: column;
     }
 
+    .frameChart {
+        width: 100%;
+        height: 500px;
+    }
+
+    .display-group {
+        height: 70px;
+    }
+
     .display {
         width: 100%;
         max-width: 100%;
         min-width: 100%;
         height: 300px;
         overflow-y: scroll;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .display-group {
+        height: 90px;
     }
 }
