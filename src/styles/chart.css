@@ -43,7 +43,7 @@
     }
 
     .divBut button {
-        width: 100%;
+        width: 50%;
         margin: 0.5rem 0;
     }
 }
