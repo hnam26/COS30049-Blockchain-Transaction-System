@@ -14,6 +14,7 @@ import axios from 'axios';
 import { ProcessGraphData } from "../data/Process";
 import accountcss from "../styles/account.css";
 const Account = () => {
+    // "proxy": "http://localhost:5000",
     const params = useParams();
     const id = params.id;
     const pageStep = 10;
@@ -107,7 +108,6 @@ const Account = () => {
 
 
         const requests = [fetchSummary, fetchTableTransaction, fetchTotalPage, fetchNode, fetchGraphNode];
-        // // const requests = [fetchTableTransaction, fetchGraphNode];
 
         const results = [];
         requests.forEach(request => {
@@ -120,7 +120,7 @@ const Account = () => {
     }, [id]);
 
 
-
+    console.log("loading is", loading);
 
 
 
