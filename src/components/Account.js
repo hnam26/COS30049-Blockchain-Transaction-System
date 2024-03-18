@@ -33,7 +33,7 @@ const Account = () => {
         setTabelData(null);
         setGraphData(null);
 
-        const fetchNode = axios.get(`/addresses/${id}?node=true`).then(response => {
+        const fetchNode = axios.get(`http://localhost:5000/addresses/${id}?node=true`).then(response => {
             const node = response.data;
             setNode(node);
             setLoading(false);
@@ -43,7 +43,7 @@ const Account = () => {
             setError(error);
         });
 
-        const fetchTotalPage = axios.get(`/addresses/${id}?totalPageCount=true`).then(response => {
+        const fetchTotalPage = axios.get(`http://localhost:5000/addresses/${id}?totalPageCount=true`).then(response => {
             let pageTotal = Math.floor(+response.data.pageTotal / +pageStep) + 1;
             setTotalPage(+pageTotal);
             setLoading(false);
@@ -54,7 +54,7 @@ const Account = () => {
         });
 
 
-        const fetchTableTransaction = axios.get(`/addresses/${id}?pages=${1}`).then(response => {
+        const fetchTableTransaction = axios.get(`http://localhost:5000/addresses/${id}?pages=${1}`).then(response => {
             const values = ProcessGraphData(response.data);
             setTabelData({
                 nodes: values.nodes,
@@ -68,8 +68,8 @@ const Account = () => {
         });
 
         const fetchSummary = Promise.all([
-            axios.get(`/addresses/${id}?sent=true`),
-            axios.get(`/addresses/${id}?receive=true`)
+            axios.get(`http://localhost:5000/addresses/${id}?sent=true`),
+            axios.get(`http://localhost:5000/addresses/${id}?receive=true`)
         ]).then(axios.spread((sentResponse, receiveResponse) => {
             var sent = sentResponse.data.coin;
             var receive = receiveResponse.data.coin;
@@ -90,7 +90,7 @@ const Account = () => {
             setError(errors);
         });
 
-        const fetchGraphNode = axios.get(`/addresses/${id}?all=true`).then(response => {
+        const fetchGraphNode = axios.get(`http://localhost:5000/addresses/${id}?all=true`).then(response => {
             const values = ProcessGraphData(response.data);
             setGraphData({
                 nodes: values.nodes,
@@ -141,7 +141,7 @@ const Account = () => {
             });
         } else {
             // Fetch api for table transaction
-            axios.get(`/addresses/${id}?pages=${pageNumber}`).then(response => {
+            axios.get(`http://localhost:5000/addresses/${id}?pages=${pageNumber}`).then(response => {
                 const values = ProcessGraphData(response.data);
                 setTabelData({
                     nodes: values.nodes,

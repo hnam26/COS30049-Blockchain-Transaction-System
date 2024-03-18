@@ -45,7 +45,7 @@ const GraphNode = ({ props: { nodes, links } }) => {
 
     const fetchData = async (id) => {
         try {
-            const response = await axios.get(`/addresses/${id}?all=true`);
+            const response = await axios.get(`http://localhost:5000/addresses/${id}?all=true`);
             var nodes = [...graphData.nodes];
             var links = [...graphData.links];
             const values = ProcessGraphData(response.data, [...nodes], [...links]);
