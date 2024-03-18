@@ -8,6 +8,7 @@
 
 import React from 'react';
 import './styles/app.css';
+import './styles/error.css';
 import Navbar from './components/Navbar';
 import Search from './components/Search';
 import Footer from './components/Footer';
