@@ -5,7 +5,11 @@ const neo4j = require('neo4j-driver');
 
 // Create an Express application
 const app = express();
-
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 // Set up Neo4j driver
 const driver = neo4j.driver('neo4j+s://7f7255e1.databases.neo4j.io', neo4j.auth.basic('neo4j', 't_h5cCVNR-FEFwAoq8B2wcw4qFRl3GqdHsf6RVZls3M'));
 
