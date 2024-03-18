@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route, Switch, Navigate } from 'react-router-dom
 import './styles/index.css';
 import App from './App';
 import Account from './components/Account';
-import PageNotFound from './components/PageNotFound';
 import reportWebVitals from './reportWebVitals';
 import Error from './components/ErrorPage';
 
