@@ -9,14 +9,10 @@ const GraphNode = ({ props: { nodes, links } }) => {
     const fgRef = useRef();
     const [error, setError] = useState(null);
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
-    const [displayWidth, setDisplayWidth] = useState(window.innerWidth);
-    const [displayHeight, setDisplayHeight] = useState(window.innerHeight);
     // const [hoveredLink, setHoveredLink] = useState(null);
     const hoveredLinkRef = useRef(null);
     const clickLinkRef = useRef(null);
     let timeoutId;
-    // const [nodeIDs, setNodeIDs] = useState([params.id]);
-    const nodeIDs = [params.id];
 
     const containerRef = useRef();
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
@@ -71,7 +67,7 @@ const GraphNode = ({ props: { nodes, links } }) => {
         const graphDataCopy = JSON.parse(JSON.stringify({ nodes: nodes, links: links }));
         setGraphData(graphDataCopy);
         fgRef.current.d3Force('link').distance(link => { return 50; });
-    }, []);
+    }, [nodes, links]);
 
 
     const graphDataCopy = JSON.parse(JSON.stringify(graphData));
@@ -142,7 +138,7 @@ const GraphNode = ({ props: { nodes, links } }) => {
             `;
         }
     }
-    if (error) return `Error: $${error}`;
+    if (error) return `Error: ${error}`;
 
     return (
         <div className='graphNode'>
@@ -178,8 +174,6 @@ const GraphNode = ({ props: { nodes, links } }) => {
             <div ref={containerRef} className='frameChart'>
                 <ForceGraph2D
                     ref={fgRef}
-                    // width={+displayWidth <= 768 ? +displayWidth * 0.7 : +displayWidth}
-                    // height={displayHeight}
                     width={dimensions.width}
                     height={dimensions.height}
                     graphData={graphDataCopy}
@@ -199,20 +193,11 @@ const GraphNode = ({ props: { nodes, links } }) => {
                         });
                     }}
                     onNodeDragEnd={(node, translate) => {
-
                         node.fx = node.x;
                         node.fy = node.y;
                         node.fz = node.z;
-
-
                     }}
                     onNodeClick={node => {
-                        // var isIDSearched = nodeIDs.some(nodeID => nodeID === node.id);
-                        // if (!isIDSearched) {
-                        //     nodeIDs.push(node.id);
-                        //     fetchData(node.id);
-                        //     console.log("fetch node", node.id);
-                        // }
                         fetchData(node.id);
                     }}
 
@@ -226,8 +211,6 @@ const GraphNode = ({ props: { nodes, links } }) => {
                         tooltipContent += "</div>";
                         return tooltipContent;
                     }}
-                    // linkWidth={0.3}
-                    // linkWidth="width"
                     linkWidth={(link) => (link === hoveredLinkRef.current || link === clickLinkRef.current) ? 3 : 0.3} // Add this line
                     linkCurvature="curvature"
                     linkCurveRotation="rotation"
@@ -237,18 +220,13 @@ const GraphNode = ({ props: { nodes, links } }) => {
                         return "black";
                     }}
                     onLinkHover={(link) => {
-                        // console.log(link);
                         if (link) {
-                            // setHoveredLink(link);
                             hoveredLinkRef.current = link;
-                            // selectedLinkRef.current = link;
-                            // link.width = 3;
                             clearTimeout(timeoutId);
                             timeoutId = setTimeout(() => {
                             }, 300);
                             displayLinkData(link);
                         } else {
-                            // setHoveredLink(null);
                             hoveredLinkRef.current = null;
                             clearTimeout(timeoutId);
                             displayLinkData();
@@ -262,7 +240,6 @@ const GraphNode = ({ props: { nodes, links } }) => {
                         }
                     }}
                     onLinkClick={(link) => {
-                        // console.log("click", link);
                         if (link) {
                             if (link.clicked) {
                                 clickLinkRef.current = null;
@@ -277,7 +254,6 @@ const GraphNode = ({ props: { nodes, links } }) => {
                             link.clicked = !link.clicked;
                         }
                     }}
-                // backgroundColor="white"
                 />
             </div>
 

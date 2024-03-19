@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
 import avatar from "../assets/images/avatar.png";
-import UserInfoCss from "../styles/user-info.css";
+import "../styles/user-info.css";
 const UserInfo = ({ summary, node }) => {
     const [showPopup, setShowPopup] = useState(false);
     const nodeId = node.properties.addressId;
@@ -13,11 +12,11 @@ const UserInfo = ({ summary, node }) => {
         return firstThreeLetters + lastThreeLetters;
     };
 
-    const ethToDollars = (ethcoinAmount, rate) => {
-        // Convert Bitcoin to dollars using the provided rate
-        const dollars = ethcoinAmount * rate;
-        return dollars;
-    };
+    // const ethToDollars = (ethcoinAmount, rate) => {
+    //     // Convert Bitcoin to dollars using the provided rate
+    //     const dollars = ethcoinAmount * rate;
+    //     return dollars;
+    // };
 
     const handleCopyToClipboard = () => {
         // Copy the content of node.id to the clipboard

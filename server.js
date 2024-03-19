@@ -4,12 +4,15 @@ const path = require('path');
 const neo4j = require('neo4j-driver');
 
 // Create an Express application
-const app = express();
+const app = express(); // Initialize Express app
+
+// Middleware to enable CORS (Cross-Origin Resource Sharing)
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+
 // Set up Neo4j driver
 const driver = neo4j.driver('neo4j+s://7f7255e1.databases.neo4j.io', neo4j.auth.basic('neo4j', 't_h5cCVNR-FEFwAoq8B2wcw4qFRl3GqdHsf6RVZls3M'));
 
@@ -17,10 +20,11 @@ const driver = neo4j.driver('neo4j+s://7f7255e1.databases.neo4j.io', neo4j.auth.
 
 app.get('/addresses/:id', async (req, res) => {
     const session = driver.session();
-    const id = req.params.id;
+    const id = req.params.id; // Get the address ID from request parameters
     const { pages, sent, receive, node, totalPageCount, all } = req.query;
 
     try {
+        // Route requests based on query parameters
         if (pages) {
             await fetchPages(session, id, pages, res);
         } else if (sent) {
@@ -42,6 +46,7 @@ app.get('/addresses/:id', async (req, res) => {
     }
 });
 
+// Function to fetch pages
 async function fetchPages(session, id, pages, res) {
     const limit = 10;
     const skip = (pages - 1) * limit;
@@ -63,6 +68,7 @@ async function fetchPages(session, id, pages, res) {
     res.send(records);
 }
 
+// Function to fetch sent transactions
 async function fetchSent(session, id, res) {
     try {
         const result = await session.run(
@@ -85,6 +91,7 @@ async function fetchSent(session, id, res) {
     }
 }
 
+// Function to fetch received transactions
 async function fetchReceive(session, id, res) {
     try {
         const result = await session.run(
@@ -107,6 +114,7 @@ async function fetchReceive(session, id, res) {
     }
 }
 
+// Function to fetch node details
 async function fetchNode(session, id, res) {
     try {
         const result = await session.run('MATCH (n {addressId: $id}) RETURN  n', { id: id });
@@ -122,6 +130,7 @@ async function fetchNode(session, id, res) {
     }
 }
 
+// Function to fetch total page count
 async function fetchTotalPageCount(session, id, res) {
     try {
         const result = await session.run('MATCH (n {addressId: $id})-[r]-(m) RETURN COUNT( r) AS count_r', { id: id });
@@ -132,6 +141,7 @@ async function fetchTotalPageCount(session, id, res) {
     }
 }
 
+// Function to fetch all records
 async function fetchAll(session, id, res) {
     try {
         const result = await session.run('MATCH (n {addressId: $id})-[r]-(m) RETURN  n,m,r', { id: id });

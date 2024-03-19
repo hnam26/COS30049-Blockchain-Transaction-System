@@ -1,10 +1,10 @@
 import React from "react";
-import Summary from "../../styles/summary.css";
+import "../../styles/summary.css";
 const TransactionSummarySke = () => {
     // Render summary section
     return (
         <section className="transaction-summary loading">
-            <h2 className="summary-title"></h2>
+            <div className="summary-title"></div>
             <div className="summary-stats">
                 {/* Display total transactions */}
                 <div className="summary-stat">
