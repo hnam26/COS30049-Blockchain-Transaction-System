@@ -151,20 +151,16 @@ const Account = () => {
 
     // Cannot connect to database
     if (error) {
-        console.log(error);
+        console.log(error.response?.status);
         // Determine the error type based on the error message or status code
-        if (error.message && error.message.includes("404")) {
-            <Error props={{ status: "404" }} />;
-        } else if (error.message && error.message.includes("500")) {
-            <Error props={{ status: "500" }} />;
-        } else {
-            return (
-                <>
-                    <Error />
-                </>
-            );
+        if (error?.response?.status === 404) {
+            return (<Error props={{ status: "404" }} />);
         }
-        return <div>Error {error.message}</div>;
+        if (error?.response?.status === 500) {
+            return (<Error props={{ status: "500" }} />);
+        }
+        return (<Error props={{ status: "500" }} />);
+
     }
 
     // Can connect to database
