@@ -1,12 +1,14 @@
 import React from "react";
 import errorImage from "../assets/images/sad.png";
-// import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 const Error = ({ props }) => {
-  // const params = useParams();
+
+  // Extracting status from props
   const error = props?.status;
+  // If the error code is 404
   if (error === '404') {
     return (
+      // Return JSX for 404 error page
       <div className="main-error-page">
         <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="470" height="290" viewBox="0 0 470 290">
           <defs>
@@ -60,8 +62,10 @@ const Error = ({ props }) => {
 
       </div>
     );
+    // If status code is 500
   } else if (error === '500') {
     return (
+      // Return JSX for 500 error page
       <div className="main-error-page">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -508,6 +512,7 @@ const Error = ({ props }) => {
    )
   } else {
     return (
+      // Return error message
       <div className="error">
         <img className="error-image" src={errorImage} alt="Error" />
         <p className="error-message">

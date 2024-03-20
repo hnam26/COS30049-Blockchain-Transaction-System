@@ -6,17 +6,12 @@ const UserInfo = ({ summary, node }) => {
     const nodeId = node.properties.addressId;
     const type = node.properties.type;
 
+
     const shortenNodeId = (nodeId) => {
         const firstThreeLetters = nodeId.slice(2, 5);
         const lastThreeLetters = nodeId.slice(-3);
         return firstThreeLetters + lastThreeLetters;
     };
-
-    // const ethToDollars = (ethcoinAmount, rate) => {
-    //     // Convert Bitcoin to dollars using the provided rate
-    //     const dollars = ethcoinAmount * rate;
-    //     return dollars;
-    // };
 
     const handleCopyToClipboard = () => {
         // Copy the content of node.id to the clipboard
@@ -28,9 +23,6 @@ const UserInfo = ({ summary, node }) => {
                 setTimeout(() => {
                     setShowPopup(false);
                 }, 3000);
-            })
-            .catch((error) => {
-                // console.error("Failed to copy:", error);
             });
     };
     // Render UserInfo component

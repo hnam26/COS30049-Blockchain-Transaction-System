@@ -9,14 +9,15 @@ const GraphNode = ({ props: { nodes, links } }) => {
     const fgRef = useRef();
     const [error, setError] = useState(null);
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
-    // const [hoveredLink, setHoveredLink] = useState(null);
+
     const hoveredLinkRef = useRef(null);
     const clickLinkRef = useRef(null);
     let timeoutId;
 
     const containerRef = useRef();
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-
+    
+    //  Update dimensions
     useEffect(() => {
         const updateDimensions = () => {
             if (containerRef.current) {
@@ -38,7 +39,7 @@ const GraphNode = ({ props: { nodes, links } }) => {
         };
     }, []);
 
-
+    // Fetch data
     const fetchData = async (id) => {
         try {
             const response = await axios.get(`http://localhost:5000/addresses/${id}?all=true`);
@@ -61,7 +62,7 @@ const GraphNode = ({ props: { nodes, links } }) => {
         }
     };
 
-
+    // Update graph data
     useEffect(() => {
         //Important to create deep copy
         const graphDataCopy = JSON.parse(JSON.stringify({ nodes: nodes, links: links }));
@@ -73,7 +74,7 @@ const GraphNode = ({ props: { nodes, links } }) => {
     const graphDataCopy = JSON.parse(JSON.stringify(graphData));
 
 
-
+    // Display link data
     function displayLinkData(link) {
         if (link) {
             document.querySelector('.display').innerHTML = `
@@ -138,8 +139,9 @@ const GraphNode = ({ props: { nodes, links } }) => {
             `;
         }
     }
+    // Render error message
     if (error) return `Error: ${error}`;
-
+    // Render graph node
     return (
         <div className='graphNode'>
             <div className='display'>
