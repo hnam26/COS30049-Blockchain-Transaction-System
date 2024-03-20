@@ -13,12 +13,14 @@
   --color-brand: #ED1C2E;
   --font-fam: 'Barlow';
   --height: 2rem;
-  --btn-width: 5rem;
+  --btn-width: 6rem;
   --bez: cubic-bezier(0, 0, 0.43, 1.49);
 }
 
+
 /* Form styles */
-form {
+.formSearch {
+  margin: 20px;
   position: relative;
   width: 40%;
   background: var(--color-light);
@@ -26,8 +28,22 @@ form {
   margin: 1em;
 }
 
-/* Styles for input elements */
-input,
+/* Styles for the search box */
+.searchBox {
+  border-radius: .375rem;
+  padding-left: 2.5rem;
+  padding-right: 2rem;
+  padding: .375rem 1rem;
+  width: 100%;
+  display: block;
+  height: 30px;
+
+}
+
+
+
+/* Styles for .search-input elements */
+.search-input,
 #search-btn {
   height: var(--height);
   /* font-family: var(--font-fam); */
@@ -37,8 +53,10 @@ input,
   padding: 5px 1em;
 }
 
-/* Styles for general input */
-input {
+/* Styles for general .search-input */
+.search-input {
+  padding-right: 6.2rem;
+  height: 2.5em;
   width: 100%;
   outline: none;
   background: var(--color-light);
@@ -48,8 +66,8 @@ input {
   box-shadow: 0 0 5px var(--color-dark);
 }
 
-/* Styles for search input */
-input[type="search"] {
+/* Styles for search .search-input */
+.search-input[type="search"] {
   padding: 10px;
   outline: 0;
   width: 100%;
@@ -66,7 +84,7 @@ input[type="search"] {
   display: none;
   position: absolute;
   top: 0;
-  right: -30px;
+  right: +0.2em;
   width: var(--btn-width);
   font-weight: lighter;
   background: var(--color-brand);
@@ -81,15 +99,15 @@ input[type="search"] {
   animation: fadeInAnimation var(--dur);
 }
 
-/* Styles for input when not empty */
-input:not(:placeholder-shown) {
+/* Styles for .search-input when not empty */
+.search-input:not(:placeholder-shown) {
   border-radius: var(--rad);
   width: calc(100%);
   outline: none;
 }
 
-/* Show search button when input is not empty */
-input:not(:placeholder-shown)+#search-btn {
+/* Show search button when .search-input is not empty */
+.search-input:not(:placeholder-shown)+#search-btn {
   display: block;
 }
 
@@ -112,5 +130,17 @@ label {
 
   100% {
     opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .formSearch {
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 570px) {
+  .formSearch {
+    width: 80%;
   }
 }

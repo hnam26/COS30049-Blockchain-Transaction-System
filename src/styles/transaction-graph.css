@@ -19,6 +19,10 @@
     width: 100%;
 }
 
+.frameChart {
+    width: 70%;
+}
+
 .display {
     width: 30%;
     max-width: 30%;
@@ -44,7 +48,7 @@
 .display-group {
     padding: 1em 1em;
     width: 100%;
-    height: 100px;
+    height: 90px;
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #e0dfdf;
@@ -63,14 +67,30 @@
 }
 
 .display-group div:last-child {
-    width: 60%;
+    width: 50%;
     word-wrap: break-word;
 }
+
+@media only screen and (max-width: 1000px) {
+    .display-group {
+        height: 120px;
+    }
+}
+
 
 @media only screen and (max-width: 768px) {
 
     .graphNode {
         flex-direction: column;
+    }
+
+    .frameChart {
+        width: 100%;
+        height: 500px;
+    }
+
+    .display-group {
+        height: 70px;
     }
 
     .display {
@@ -79,5 +99,11 @@
         min-width: 100%;
         height: 300px;
         overflow-y: scroll;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .display-group {
+        height: 90px;
     }
 }

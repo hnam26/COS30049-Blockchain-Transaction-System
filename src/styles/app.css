@@ -28,66 +28,10 @@
   flex-direction: column;
 }
 
-/* Styles for the transactions table */
-.transactions-table {
-  width: 100%;
-  margin: 30px 0;
-  border-collapse: collapse;
-}
-
-/* Styles for table headers and cells */
-.transactions-table th,
-.transactions-table td {
-  padding: 8px;
-  text-align: center;
-}
-
-/* Styles for table header cells */
-.transactions-table th {
-  background-color: #FF8080;
-  font-weight: bold;
-  color: white;
-}
-
-/* Styles for rounded corners on first and last header cells */
-.transactions-table th:first-child {
-  border-top-left-radius: 8px;
-}
-
-.transactions-table th:last-child {
-  border-top-right-radius: 8px;
-}
-
-/* Styles for table data cells */
-.transactions-table td {
-  border: 1px solid #e0dfdf;
-  border-left: none;
-  border-right: none;
-}
-
-/* Styles for table row on hover */
-.transactions-table tr:hover {
-  background-color: #f0f0f0;
-  /* Change background color on hover */
-}
-
-/* Error styles */
-.revenueError {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 20px;
-  background-color: #ffcccc;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-  transform: translateY(-10px);
-  animation: bounce 0.5s ease-in-out forwards;
-}
 
 /* Animation keyframes for error message */
 @keyframes bounce {
+
   from,
   to {
     transform: translateY(0);
@@ -99,28 +43,59 @@
 }
 
 /* Styles for error message image */
-.revenueError img {
+.error img {
   max-width: 20px;
   margin-right: 10px;
 }
 
+.error404 .error-image,
+.error500 .error-image {
+  max-width: 200px;
+  margin-bottom: 20px;
+}
+
 /* Styles for error message text */
-.revenueError p {
-  color: #cc0000;
+.error-title {
+  font-size: 24px;
   font-weight: bold;
-  margin: 0;
+  margin-bottom: 10px;
+}
+
+.error-message {
+  font-size: 18px;
+  text-align: center;
+}
+
+/* Styles for error button */
+.error-button {
+  background-color: #ed1c2e;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.4s ease-out;
+  border: 1px solid transparent;
+}
+
+.error-button:hover {
+  background-color: #fff;
+  color: #ed1c2e;
+  border: #ed1c2e 1px solid;
 }
 
 @media only screen and (max-width: 768px) {
-  
+
   /* Styles for the transaction table section in mobile view */
   .transactions-table {
     overflow-x: auto;
     white-space: nowrap;
     display: block;
   }
-  
-  .transactions-table th, .transactions-table td {
+
+  .transactions-table th,
+  .transactions-table td {
     white-space: nowrap;
     /* display: inline-block; */
   }

@@ -9,15 +9,39 @@ const GraphNode = ({ props: { nodes, links } }) => {
     const fgRef = useRef();
     const [error, setError] = useState(null);
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
-    const [displayWidth, setDisplayWidth] = useState(window.innerWidth);
-    const [displayHeight, setDisplayHeight] = useState(window.innerHeight);
-    // const [nodeIDs, setNodeIDs] = useState([params.id]);
-    const nodeIDs = [params.id];
+    // const [hoveredLink, setHoveredLink] = useState(null);
+    const hoveredLinkRef = useRef(null);
+    const clickLinkRef = useRef(null);
+    let timeoutId;
+
+    const containerRef = useRef();
+    const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+    useEffect(() => {
+        const updateDimensions = () => {
+            if (containerRef.current) {
+                setDimensions({
+                    width: containerRef.current.offsetWidth,
+                    height: containerRef.current.offsetHeight
+                });
+            }
+        };
+
+        window.addEventListener('resize', updateDimensions);
+
+        // Initial update
+        updateDimensions();
+
+        // Cleanup
+        return () => {
+            window.removeEventListener('resize', updateDimensions);
+        };
+    }, []);
 
 
     const fetchData = async (id) => {
         try {
-            const response = await axios.get(`/addresses/${id}`);
+            const response = await axios.get(`http://localhost:5000/addresses/${id}?all=true`);
             var nodes = [...graphData.nodes];
             var links = [...graphData.links];
             const values = ProcessGraphData(response.data, [...nodes], [...links]);
@@ -43,74 +67,78 @@ const GraphNode = ({ props: { nodes, links } }) => {
         const graphDataCopy = JSON.parse(JSON.stringify({ nodes: nodes, links: links }));
         setGraphData(graphDataCopy);
         fgRef.current.d3Force('link').distance(link => { return 50; });
-    }, []);
+    }, [nodes, links]);
 
 
     const graphDataCopy = JSON.parse(JSON.stringify(graphData));
 
-    window.addEventListener('resize', () => {
-        setDisplayWidth(window.innerWidth);
-        setDisplayHeight(window.innerHeight);
-    });
+
 
     function displayLinkData(link) {
         if (link) {
-            document.querySelector('.display-change').innerHTML = `
-                <div class="display-group">
-                    <div>From</div>
-                    <div>${link.source.id}</div>
-                </div>
-                <div class="display-group">
-                    <div>To</div>
-                    <div>${link.target.id}</div>
-                </div>
-                <div class="display-group">
-                    <div>Transaction ID</div>
-                    <div>${link.transaction_index}</div>
-                </div>
-                <div class="display-group">
-                    <div>Value</div>
-                    <div>${link.value}</div>
-                </div>
-                <div class="display-group">
-                    <div>Date</div>
-                    <div>${new Date(link.block_timestamp * 1000).toLocaleDateString()} ${new Date(link.block_timestamp * 1000).toLocaleTimeString()}</div>
-                </div>
-                <div class="display-group">
-                    <div>Block number</div>
-                    <div>${link.block_number}</div>
-                </div>`;
+            document.querySelector('.display').innerHTML = `
+                <h3>Relationship</h3>
+                <div className="display-change">
+                    <div class="display-group">
+                        <div>From</div>
+                        <div>${link.source.id}</div>
+                    </div>
+                    <div class="display-group">
+                        <div>To</div>
+                        <div>${link.target.id}</div>
+                    </div>
+                    <div class="display-group">
+                        <div>Transaction ID</div>
+                        <div>${link.transaction_index}</div>
+                    </div>
+                    <div class="display-group">
+                        <div>Value</div>
+                        <div>${link.value}</div>
+                    </div>
+                    <div class="display-group">
+                        <div>Date</div>
+                        <div>${new Date(link.block_timestamp * 1000).toLocaleDateString()} ${new Date(link.block_timestamp * 1000).toLocaleTimeString()}</div>
+                    </div>
+                    <div class="display-group">
+                        <div>Block number</div>
+                        <div>${link.block_number}</div>
+                    </div>
+                 </div >
+                `;
 
         } else {
-            document.querySelector('.display-change').innerHTML = `
-                <div class="display-group">
-                    <div>From</div>
-                    <div> </div>
-                </div>
-                <div class="display-group">
-                    <div>To</div>
-                    <div> </div>
-                </div>
-                <div class="display-group">
-                    <div>Transaction ID</div>
-                    <div> </div>
-                </div>
-                <div class="display-group">
-                    <div>Value</div>
-                    <div> </div>
-                </div>
-                <div class="display-group">
-                    <div>Date</div>
-                    <div> </div>
-                </div>
-                <div class="display-group">
-                    <div>Block number</div>
-                    <div> </div>
+            document.querySelector('.display').innerHTML = `
+                <h3>Relationship</h3>
+                <div className="display-change">
+                    <div class="display-group">
+                        <div>From</div>
+                        <div> </div>
+                    </div>
+                    <div class="display-group">
+                        <div>To</div>
+                        <div> </div>
+                    </div>
+                    <div class="display-group">
+                        <div>Transaction ID</div>
+                        <div> </div>
+                    </div>
+                    <div class="display-group">
+                        <div>Value</div>
+                        <div> </div>
+                    </div>
+                    <div class="display-group">
+                        <div>Date</div>
+                        <div> </div>
+                    </div>
+                    <div class="display-group">
+                        <div>Block number</div>
+                        <div> </div>
+                    </div>
                 </div>
             `;
         }
     }
-    if (error) return `Error: $${error}`;
+    if (error) return `Error: ${error}`;
 
     return (
         <div className='graphNode'>
@@ -143,101 +171,92 @@ const GraphNode = ({ props: { nodes, links } }) => {
                     </div>
                 </div>
             </div>
-            <ForceGraph2D
-                ref={fgRef}
-                width={displayWidth * 0.7}
-                height={displayHeight}
-                graphData={graphDataCopy}
-                nodeVal={node => node.id === params.id ? 15 : 3}
-                nodeResolution={30}
-                nodeAutoColorBy="id"
-                nodeLabel={(function (node) {
-                    return "<div><span class='label'>Wallet address: " + node.id + "<br />";
-                })}
-                onNodeDrag={node => {
-                    graphDataCopy.nodes.forEach(n => {
-                        if (n !== node) {
-                            n.fx = n.x;
-                            n.fy = n.y;
-                            n.fz = n.z;
-                        }
-                    });
-                }}
-                onNodeDragEnd={(node, translate) => {
-
-                    node.fx = node.x;
-                    node.fy = node.y;
-                    node.fz = node.z;
-
-
-                }}
-                onNodeRightClick={(node) => {
-                    var isIDSearched = nodeIDs.some(nodeID => nodeID === node.id);
-                    if (!isIDSearched) {
-                        nodeIDs.push(node.id);
-                        fetchData(node.id);
-
-                    }
-                }}
-                onNodeClick={node => {
-
-                }}
-
-                linkLabel={link => {
-                    // Implementation for custom link color
-                    let tooltipContent = "<div class='label'>";
-                    tooltipContent += "<span class='label'>Transaction ID: " + link.transaction_index + "</span>";
-                    tooltipContent += "<span class='label'>Value: " + link.value + "</span>";
-                    tooltipContent += "<span class='label'>Date: " + new Date(link.block_timestamp * 1000).toLocaleDateString() + " " + new Date(link.block_timestamp * 1000).toLocaleTimeString() + "</span>";
-                    tooltipContent += "<span class='label'>Block number: " + link.block_number + "</span>";
-                    tooltipContent += "</div>";
-                    return tooltipContent;
-                }}
-                // linkWidth={0.3}
-                linkWidth="width"
-                linkCurvature="curvature"
-                linkCurveRotation="rotation"
-                linkDirectionalArrowLength={1}
-                linkDirectionalArrowRelPos={0.5}
-                linkColor={link => {
-                    return "black";
-                }}
-                onLinkHover={(link) => {
-                    if (link) {
-                        // selectedLinkRef.current = link;
-                        link.width = 3;
-                        console.log(link);
-                        displayLinkData(link);
-                    } else {
-                        displayLinkData();
-                        graphDataCopy.links.forEach(l => {
-                            if (l.clicked === false) {
-                                l.width = 0.3;
-                            } else {
-                                displayLinkData(l);
+            <div ref={containerRef} className='frameChart'>
+                <ForceGraph2D
+                    ref={fgRef}
+                    width={dimensions.width}
+                    height={dimensions.height}
+                    graphData={graphDataCopy}
+                    nodeVal={node => node.id === params.id ? 15 : 3}
+                    nodeResolution={30}
+                    nodeAutoColorBy="id"
+                    nodeLabel={(function (node) {
+                        return "<div><span class='label'>Wallet address: " + node.id + "<br />";
+                    })}
+                    onNodeDrag={node => {
+                        graphDataCopy.nodes.forEach(n => {
+                            if (n !== node) {
+                                n.fx = n.x;
+                                n.fy = n.y;
+                                n.fz = n.z;
                             }
                         });
-                    }
-                    // link.width = 3;
-                }}
-                onLinkClick={(link) => {
-                    console.log("click", link);
-                    if (link) {
-                        if (link.clicked) {
-                            link.width = 0.3;
-                            displayLinkData();
-                        } else {
+                    }}
+                    onNodeDragEnd={(node, translate) => {
+                        node.fx = node.x;
+                        node.fy = node.y;
+                        node.fz = node.z;
+                    }}
+                    onNodeClick={node => {
+                        fetchData(node.id);
+                    }}
+
+                    linkLabel={link => {
+                        // Implementation for custom link color
+                        let tooltipContent = "<div class='label'>";
+                        tooltipContent += "<span class='label'>Transaction ID: " + link.transaction_index + "</span>";
+                        tooltipContent += "<span class='label'>Value: " + link.value + "</span>";
+                        tooltipContent += "<span class='label'>Date: " + new Date(link.block_timestamp * 1000).toLocaleDateString() + " " + new Date(link.block_timestamp * 1000).toLocaleTimeString() + "</span>";
+                        tooltipContent += "<span class='label'>Block number: " + link.block_number + "</span>";
+                        tooltipContent += "</div>";
+                        return tooltipContent;
+                    }}
+                    linkWidth={(link) => (link === hoveredLinkRef.current || link === clickLinkRef.current) ? 3 : 0.3} // Add this line
+                    linkCurvature="curvature"
+                    linkCurveRotation="rotation"
+                    linkDirectionalArrowLength={5}
+                    linkDirectionalArrowRelPos={0.5}
+                    linkColor={link => {
+                        return "black";
+                    }}
+                    onLinkHover={(link) => {
+                        if (link) {
+                            hoveredLinkRef.current = link;
+                            clearTimeout(timeoutId);
+                            timeoutId = setTimeout(() => {
+                            }, 300);
                             displayLinkData(link);
-                            link.width = 3;
+                        } else {
+                            hoveredLinkRef.current = null;
+                            clearTimeout(timeoutId);
+                            displayLinkData();
+                            graphDataCopy.links.forEach(l => {
+                                if (l.clicked === false) {
+                                    l.width = 0.3;
+                                } else {
+                                    displayLinkData(l);
+                                }
+                            });
                         }
-                        graphDataCopy.links.forEach(l => {
-                            if (l !== link) l.clicked = false;
-                        });
-                        link.clicked = !link.clicked;
-                    }
-                }}
-                backgroundColor="white"
-            />
+                    }}
+                    onLinkClick={(link) => {
+                        if (link) {
+                            if (link.clicked) {
+                                clickLinkRef.current = null;
+                                displayLinkData();
+                            } else {
+                                clickLinkRef.current = link;
+                                displayLinkData(link);
+                            }
+                            graphDataCopy.links.forEach(l => {
+                                if (l !== link) l.clicked = false;
+                            });
+                            link.clicked = !link.clicked;
+                        }
+                    }}
+                />
+            </div>
+
         </div>
     );
 };

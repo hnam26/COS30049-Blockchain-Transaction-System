@@ -1,7 +1,7 @@
 import React from "react";
-
+import "../styles/transactionstable.css";
 const TransactionsTable = ({ props: { nodes, links } }) => {
-  const sortLinks = [...links].sort((a, b) => a.block_timestamp - b.block_timestamp);
+  const sortLinks = [...links].sort((a, b) => b.block_timestamp - a.block_timestamp);
   return (
     <>
       <h2>Transactions History</h2>
@@ -9,7 +9,6 @@ const TransactionsTable = ({ props: { nodes, links } }) => {
       <table className="transactions-table">
         <thead>
           <tr>
-            {/* <th></th> */}
             <th>Sender</th>
             <th>Receiver</th>
             <th>Amount</th>
@@ -31,7 +30,7 @@ const TransactionsTable = ({ props: { nodes, links } }) => {
               <td>{link.gas_used}</td>
               <td>{(() => {
                 var time = new Date(link.block_timestamp * 1000);
-                return time.toLocaleDateString();
+                return `${time.getDate()}/${time.getMonth() + 1}/${time.getFullYear()}`;
               })()}</td>
             </tr>
           ))}

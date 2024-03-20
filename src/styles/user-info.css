@@ -199,6 +199,8 @@
     margin-bottom: 0.1rem;
 }
 
+
+
 /* Keyframe animation for slide in down */
 @keyframes slideInDown {
     0% {
@@ -222,5 +224,60 @@
     100% {
         top: -50px;
         opacity: 0;
+    }
+}
+
+
+.loading .line,
+.loading .avatar {
+    background: #ddd;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.loading .avatar {
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+}
+
+.loading .format-address {
+    width: 10rem;
+    background: #ddd;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.loading .qr-background {
+    cursor: auto;
+    background: #ddd;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.loading .balance-frame {
+    background: #ddd;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        background-color: #ddd;
+    }
+
+    50% {
+        background-color: #eee;
+    }
+
+    100% {
+        background-color: #ddd;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .user-info .content {
+        width: 70%;
+    }
+
+    .user-info .avatar {
+        width: 50px;
+        height: 50px;
     }
 }
