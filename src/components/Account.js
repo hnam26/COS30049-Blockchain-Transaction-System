@@ -159,7 +159,9 @@ const Account = () => {
         if (error?.response?.status === 500) {
             return (<Error props={{ status: "500" }} />);
         }
-        return (<Error props={{ status: "500" }} />);
+        if (error?.response?.status === "Network Error") {
+            return (<Error props={{ status: "Network Error" }} />);
+        }
 
     }
 

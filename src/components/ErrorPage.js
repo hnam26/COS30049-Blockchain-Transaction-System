@@ -407,6 +407,105 @@ const Error = ({ props }) => {
       </div>
 
     );
+  } else if (error === 'Network Error') {
+    return (
+    <div className="err-network">
+    <svg
+      id="noConnection"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      viewBox="0 0 315 245"
+    >
+      <defs>
+        <linearGradient
+          id="a"
+          x1="-138.48"
+          y1="486.02"
+          x2="-137.54"
+          y2="486.02"
+          gradientTransform="matrix(96, 0, 0, -5.19, 13416, 2735.93)"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0" stopColor="#C9CEDB" stopOpacity="0" />
+          <stop offset="1" stopColor="#C9CEDB" />
+        </linearGradient>
+      </defs>
+
+      <title>noConnection</title>
+
+      <g className="star" dataAnimatorGroup="true" dataAnimatorType="2">
+        <path
+          className="b"
+          d="M278.54,23a1.46,1.46,0,1,1,2.92,0v3a1.46,1.46,0,0,1-2.92,0ZM272,33.46a1.46,1.46,0,1,1,0-2.92h3a1.46,1.46,0,0,1,0,2.92ZM281.46,40a1.46,1.46,0,0,1-2.92,0V37a1.46,1.46,0,1,1,2.92,0ZM288,30.54a1.46,1.46,0,0,1,0,2.92h-3a1.46,1.46,0,1,1,0-2.92Z"
+        />
+      </g>
+
+      <path
+        className="c circlesBottom"
+        d="M273.49,180.75a1.46,1.46,0,1,1,2.89-.42,8,8,0,1,1-9-6.78,1.47,1.47,0,0,1,.42,2.9,5.07,5.07,0,1,0,5.7,4.3Z"
+      />
+
+      <path
+        className="c"
+        d="M158.49,27.75a1.46,1.46,0,1,1,2.89-.42,8,8,0,1,1-9-6.78,1.47,1.47,0,0,1,.42,2.9,5.07,5.07,0,1,0,5.7,4.3Z"
+      />
+
+      <path
+        className="d circlesTop"
+        d="M301,109c2.42-.77,6.14-3.77,7-7,.78,2.86,4.05,6.23,7,6.49-3.32,1.19-6.5,4.73-7,7.51-.34-2.83-4.73-6.59-7-7"
+      />
+
+      <path
+        className="d circlesBottom"
+        d="M13,166.5a6,6,0,0,0,3.5-3.5,4.77,4.77,0,0,0,3.5,3.24A5.88,5.88,0,0,0,16.5,170c-.17-1.42-2.37-3.29-3.5-3.5"
+      />
+
+      <path className="c circlesBottom" d="M6,99a3,3,0,1,1-3-3,3,3,0,0,1,3,3" />
+
+      <path
+        className="c circlesBottom"
+        d="M65.54,3A1.54,1.54,0,1,0,64,4.54,1.54,1.54,0,0,0,65.54,3Zm2.92,0A4.46,4.46,0,1,1,64-1.46,4.46,4.46,0,0,1,68.46,3Z"
+      />
+
+      <path
+        className="c circlesTop"
+        d="M47.37,198.1a2.54,2.54,0,1,0-1.47,3.27A2.53,2.53,0,0,0,47.37,198.1Zm-7.47,2.84a5.46,5.46,0,1,1,7,3.16A5.44,5.44,0,0,1,39.9,200.94Z"
+      />
+
+      <g className="cloud">
+        <path
+          className="c"
+          d="M232.5,119.58a28.69,28.69,0,0,1-28.68,28.69,29.13,29.13,0,0,1-5.1-.46h-85.4a18.25,18.25,0,0,1-2.43-.16,28.69,28.69,0,0,1-9.71-55.58,27.78,27.78,0,0,1,34.45-21.85A41.77,41.77,0,0,1,208.7,90.65a31.14,31.14,0,0,1,23.8,28.93Z"
+        />
+
+        <path
+          className="f"
+          d="M216.13,99.33a23.48,23.48,0,0,0-10-4.08L204.2,95l-.21-1.9a36.77,36.77,0,0,0-65.51-18.42L137.39,76l-1.68-.56A22.75,22.75,0,0,0,105.9,94.25l-.2,1.6-1.54.48a23.69,23.69,0,0,0,6.91,46.32,20,20,0,0,0,2.25.16h85.86a24.44,24.44,0,0,0,4.64.46,23.69,23.69,0,0,0,12.44-43.85l1.32-2.13Z"
+        />
+
+        <polygon
+          className="e lightning"
+          points="142 165.7 156.59 165.7 148.95 190.09 183 155.6 162.5 155.6 164.28 148 151.34 148 142 165.7"
+        />
+      </g>
+    </svg>
+
+    <div className="rain">
+      <div className="drop slow"></div>
+      <div className="drop fast"></div>
+      <div className="drop"></div>
+      <div className="drop faster"></div>
+    </div>
+    <div className="shadow"></div>
+    
+  <h1 className="error-title">
+          Network error
+    </h1>
+    <h2 className="error-subtitle">
+    Well, this is awkward. It appears our website decided to take a quick break.
+    </h2>
+   </div>
+   )
   } else {
     return (
       <div className="error">
