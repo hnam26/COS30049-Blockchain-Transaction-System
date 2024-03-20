@@ -13,6 +13,7 @@ import Error from "./ErrorPage";
 import axios from 'axios';
 import { ProcessGraphData } from "../data/Process";
 import "../styles/account.css";
+
 const Account = () => {
     const params = useParams();
     const id = params.id;

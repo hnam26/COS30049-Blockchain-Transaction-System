@@ -1,6 +1,5 @@
 import React from "react";
-import Summary from "../styles/summary.css";
-import { useParams } from "react-router-dom";
+
 const TransactionSummary = ({ summary }) => {
   // Render summary section
   return (

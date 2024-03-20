@@ -24,20 +24,20 @@ const Footer = () => (
                 <div className="footer-link">
                     <p><b>About</b></p>
                     <ul>
-                        <li><a href="">Our company</a></li>
-                        <li><a href="">Our Policies</a></li>
+                        <li><a href="./">Our company</a></li>
+                        <li><a href="./">Our Policies</a></li>
                     </ul>
                 </div>
                 <div className="footer-link">
                     <p><b>Contact us</b></p>
                     <div className="footer-social">
-                        <a href="">
+                        <a href="./">
                             <FontAwesomeIcon className='icon' icon={faFacebook} />
                         </a>
-                        <a href="">
+                        <a href="./">
                             <FontAwesomeIcon className='icon' icon={faTwitter} />
                         </a>
-                        <a href="">
+                        <a href="./">
                             <FontAwesomeIcon className='icon' icon={faInstagram} />
                         </a>
                     </div>
@@ -45,14 +45,14 @@ const Footer = () => (
                 <div className="footer-link">
                     <p><b>Feedback</b></p>
                     <ul>
-                        <li><a href="">Share opinion</a></li>
+                        <li><a href="./">Share opinion</a></li>
                     </ul>
                 </div>
                 <div className="footer-link">
                     <p><b>Privacy</b></p>
                     <ul>
-                        <li><a href="">For buyer</a></li>
-                        <li><a href="">For seller</a></li>
+                        <li><a href="./">For buyer</a></li>
+                        <li><a href="./">For seller</a></li>
                     </ul>
                 </div>
             </div>
