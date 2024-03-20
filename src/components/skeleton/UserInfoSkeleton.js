@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import UserInfoCss from "../../styles/user-info.css";
+import React from "react";
+import "../../styles/user-info.css";
 const UserInfoSke = () => {
     return (
         <>

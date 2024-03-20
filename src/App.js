@@ -12,19 +12,21 @@ import './styles/error.css';
 import Navbar from './components/Navbar';
 import Search from './components/Search';
 import Footer from './components/Footer';
+import Error from './components/ErrorPage';
 import { Outlet, useOutlet } from 'react-router-dom';
-const App = () => {
+const App = ({ props }) => {
   // Check if there are any child routes inside Outlet
   const outlet = useOutlet();
-
+  // console.log(props?.error);
   return (
     <div className="App">
       <Navbar />
       <Search />
       {/* Conditionally render the div if there are no child routes */}
-      {!outlet && <div style={{ height: '60vh' }} />}
+      {!outlet && !props?.error ? <div style={{ height: '60vh' }} /> : <></>}
       {/* Render the Outlet */}
       <Outlet />
+      {props?.error ? <Error props={{ status: '404' }} /> : <></>}
       <Footer />
     </div>
   );
