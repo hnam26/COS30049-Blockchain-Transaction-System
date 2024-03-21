@@ -51,7 +51,7 @@ async function fetchPages(session, id, pages, res) {
     const limit = 10;
     const skip = (pages - 1) * limit;
     const result = await session.run(
-        'MATCH (n {addressId: $id})-[r]-(m) RETURN n,m,r SKIP $skip LIMIT $limit',
+        'MATCH (n {addressId: $id})-[r]-(m) RETURN n,m,r ORDER BY r.block_timestamp DESC SKIP $skip LIMIT $limit',
         { id: id, skip: neo4j.int(skip), limit: neo4j.int(limit) }
     );
     var records = [];
@@ -144,7 +144,7 @@ async function fetchTotalPageCount(session, id, res) {
 // Function to fetch all records
 async function fetchAll(session, id, res) {
     try {
-        const result = await session.run('MATCH (n {addressId: $id})-[r]-(m) RETURN  n,m,r', { id: id });
+        const result = await session.run('MATCH (n {addressId: $id})-[r]-(m) RETURN n,m,r ORDER BY r.block_timestamp DESC', { id: id });
         var records = [];
         result.records.forEach(r => {
             const sent = r.get('n');
@@ -156,8 +156,10 @@ async function fetchAll(session, id, res) {
                 r: relationship,
             });
         });
+
         res.send(records);
     } catch (error) {
+        console.log(error);
         res.status(500).send(error);
     }
 }
