@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import '../styles/footer.css';
-import Logo from '../assets/images/full-logo.png';
+import '../../styles/footer.css';
+import Logo from '../../assets/images/full-logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
 

@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { ForceGraph2D } from 'react-force-graph';
 import { useParams } from "react-router-dom";
-import { ProcessGraphData } from '../data/Process';
-import "../styles/transaction-graph.css";
+import { ProcessGraphData } from '../../../../../../data/Process';
+import "../../../../../../styles/transaction-graph.css";
 import axios from 'axios';
 const GraphNode = ({ props: { nodes, links } }) => {
     const params = useParams();

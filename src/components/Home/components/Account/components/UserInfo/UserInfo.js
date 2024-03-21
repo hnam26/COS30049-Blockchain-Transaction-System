@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import avatar from "../assets/images/avatar.png";
-import "../styles/user-info.css";
+import avatar from "../../../../../../assets/images/avatar.png";
+import "../../../../../../styles/user-info.css";
 const UserInfo = ({ summary, node }) => {
     const [showPopup, setShowPopup] = useState(false);
     const nodeId = node.properties.addressId;

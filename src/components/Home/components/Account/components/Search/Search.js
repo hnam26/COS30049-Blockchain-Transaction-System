@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/search.css';
+import '../../../../../../styles/search.css';
 
 // Search component
 const Search = () => {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Bar } from 'react-chartjs-2';
 import "chart.js/auto";
-import "../styles/chart.css";
+import "../../../../../../styles/chart.css";
 // BarChart component
 const BarChart = ({ summary }) => {
 

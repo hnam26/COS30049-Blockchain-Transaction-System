@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import BarChart from "./BarChart";
-import TransactionsTable from "./TransactionsTable";
-import TransactionsTableSke from "./skeleton/TransactionsTableSke";
-import TransactionSummary from "./TransactionSummary";
-import TransactionSummarySke from "./skeleton/TransactionSumSke";
-import UserInfo from "./UserInfo";
-import UserInfoSke from "./skeleton/UserInfoSkeleton";
-import GraphNode from "./GraphNode";
+import BarChart from "./components/BarChart/BarChart";
+import TransactionsTable from "./components/TransactionTable/TransactionsTable";
+import TransactionsTableSke from "../../../skeleton/TransactionsTableSke";
+import TransactionSummary from "./components/TransactionSummary/TransactionSummary";
+import TransactionSummarySke from "../../../skeleton/TransactionSumSke";
+import UserInfo from "./components/UserInfo/UserInfo";
+import UserInfoSke from "../../../skeleton/UserInfoSkeleton";
+import GraphNode from "./components/GraphNode/GraphNode";
 import ReactPaginate from 'react-paginate';
-import Error from "./ErrorPage";
+import Error from "../../../common/ErrorPage";
 import axios from 'axios';
-import { ProcessGraphData } from "../data/Process";
-import "../styles/account.css";
+import { ProcessGraphData } from "../../../../data/Process";
+import "../../../../styles/account.css";
 const Account = () => {
     const params = useParams();
     const id = params.id;
@@ -36,6 +36,7 @@ const Account = () => {
 
         // Fetch node data
         const fetchNode = axios.get(`http://localhost:5000/addresses/${id}?node=true`).then(response => {
+            console.log(response);
             const node = response.data;
             setNode(node);
             setLoading(false);

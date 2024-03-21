@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/summary.css";
+import "../../../../../../styles/summary.css";
 const TransactionSummary = ({ summary }) => {
   // Render summary section
   return (

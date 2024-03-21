@@ -9,10 +9,10 @@
 import React from 'react';
 import './styles/app.css';
 import './styles/error.css';
-import Navbar from './components/Navbar';
-import Search from './components/Search';
-import Footer from './components/Footer';
-import Error from './components/ErrorPage';
+import Navbar from './components/common/Navbar';
+import Search from './components/Home/components/Account/components/Search/Search';
+import Footer from './components/common/Footer';
+import Error from './components/common/ErrorPage';
 import { Outlet, useOutlet } from 'react-router-dom';
 const App = ({ props }) => {
   // Check if there are any child routes inside Outlet
@@ -21,12 +21,7 @@ const App = ({ props }) => {
   return (
     <div className="App">
       <Navbar />
-      <Search />
-      {/* Conditionally render the div if there are no child routes */}
-      {!outlet && !props?.error ? <div style={{ height: '60vh' }} /> : <></>}
-      {/* Render the Outlet */}
       <Outlet />
-      {props?.error ? <Error props={{ status: '404' }} /> : <></>}
       <Footer />
     </div>
   );
