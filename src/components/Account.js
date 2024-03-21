@@ -151,7 +151,7 @@ const Account = () => {
 
     // Cannot connect to database
     if (error) {
-        console.log(error.response?.status);
+        console.log(error);
         // Determine the error type based on the error message or status code
         if (error?.response?.status === 404) {
             return (<Error props={{ status: "404" }} />);
@@ -159,7 +159,7 @@ const Account = () => {
         if (error?.response?.status === 500) {
             return (<Error props={{ status: "500" }} />);
         }
-        if (error?.response?.status === "Network Error") {
+        if (error?.message === "Network Error") {
             return (<Error props={{ status: "Network Error" }} />);
         }
 

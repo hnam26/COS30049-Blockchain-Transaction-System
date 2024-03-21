@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import '../styles/footer.css';
 import Logo from '../assets/images/full-logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,35 +25,35 @@ const Footer = () => (
                 <div className="footer-link">
                     <p><b>About</b></p>
                     <ul>
-                        <li><a href="">Our company</a></li>
-                        <li><a href="">Our Policies</a></li>
+                        <li><Link>Our company</Link></li>
+                        <li><Link>Our Policies</Link></li>
                     </ul>
                 </div>
                 <div className="footer-link">
                     <p><b>Contact us</b></p>
                     <div className="footer-social">
-                        <a href="">
+                        <Link>
                             <FontAwesomeIcon className='icon' icon={faFacebook} />
-                        </a>
-                        <a href="">
+                        </Link>
+                        <Link>
                             <FontAwesomeIcon className='icon' icon={faTwitter} />
-                        </a>
-                        <a href="">
+                        </Link>
+                        <Link>
                             <FontAwesomeIcon className='icon' icon={faInstagram} />
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 <div className="footer-link">
                     <p><b>Feedback</b></p>
                     <ul>
-                        <li><a href="">Share opinion</a></li>
+                        <li><Link>Share opinion</Link></li>
                     </ul>
                 </div>
                 <div className="footer-link">
                     <p><b>Privacy</b></p>
                     <ul>
-                        <li><a href="">For buyer</a></li>
-                        <li><a href="">For seller</a></li>
+                        <li><Link href="">For buyer</Link></li>
+                        <li><Link href="">For seller</Link></li>
                     </ul>
                 </div>
             </div>

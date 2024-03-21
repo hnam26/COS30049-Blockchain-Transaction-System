@@ -14,7 +14,10 @@ app.use(function (req, res, next) {
 });
 
 // Set up Neo4j driver
-const driver = neo4j.driver('neo4j+s://7f7255e1.databases.neo4j.io', neo4j.auth.basic('neo4j', 't_h5cCVNR-FEFwAoq8B2wcw4qFRl3GqdHsf6RVZls3M'));
+const neo4j_url = 'neo4j+s://7f7255e1.databases.neo4j.io';
+const neo4j_user = 'neo4j';
+const neo4j_pass = 't_h5cCVNR-FEFwAoq8B2wcw4qFRl3GqdHsf6RVZls3M';
+const driver = neo4j.driver(neo4j_url, neo4j.auth.basic(neo4j_user, neo4j_pass));
 
 // Define API endpoint
 
@@ -165,7 +168,7 @@ async function fetchAll(session, id, res) {
 
 
 // Start the server
-const port = process.env.PORT || 5000;
+const port = 5000;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

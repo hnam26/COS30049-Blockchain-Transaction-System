@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS } from "chart.js/auto";
-import { ProcessBarData } from "../data/Process";
-import { useParams } from "react-router-dom";
+import "chart.js/auto";
 import "../styles/chart.css";
 // BarChart component
 const BarChart = ({ summary }) => {
@@ -14,17 +12,17 @@ const BarChart = ({ summary }) => {
     const groupData = (sents, receives, days) => {
         let result = {};
         let date = null;
-        if (sents.length != 0 && receives.length != 0) {
+        if (sents.length !== 0 && receives.length !== 0) {
             // Both timestamps exist, compare them
             if (sents[0].block_timestamp > receives[0].block_timestamp) {
                 date = new Date(sents[0].block_timestamp * 1000);
             } else {
                 date = new Date(receives[0].block_timestamp * 1000);
             }
-        } else if (sents.length != 0) {
+        } else if (sents.length !== 0) {
             // Only sents timestamp exists
             date = new Date(sents[0].block_timestamp * 1000);
-        } else if (receives.length != 0) {
+        } else if (receives.length !== 0) {
             // Only receives timestamp exists
             date = new Date(receives[0].block_timestamp * 1000);
         } else {
@@ -86,6 +84,8 @@ const BarChart = ({ summary }) => {
                     result[month] = { sent: sentValue, receive: receiveValue };
                     date.setMonth(date.getMonth() + 1);
                 }
+                break;
+            default:
                 break;
         }
 
