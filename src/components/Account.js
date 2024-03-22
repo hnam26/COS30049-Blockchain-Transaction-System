@@ -26,10 +26,12 @@ const Account = () => {
     const [loading, setLoading] = useState(true); // State for loading status
     const [error, setError] = useState(null); // State for error handling
     const [totalPage, setTotalPage] = useState(null); // State for total number of pages
+    const [isNode, setIsNode] = useState(false);
     const [showWalletContent, setShowWalletContent] = useState(true); // State for toggling wallet content
     useEffect(() => {
         // Reset states and set loading status when component mounts or 'id' changes
         setLoading(true);
+        setIsNode(false);
         setNode(null);
         setSummary(null);
         setTabelData(null);
@@ -40,6 +42,7 @@ const Account = () => {
             const node = response.data;
             setNode(node);
             setLoading(false);
+            if (node !== null) setIsNode(true);
             return 'node';
         }).catch(error => {
             console.log("error at node", error.message);
@@ -63,6 +66,8 @@ const Account = () => {
                 nodes: values.nodes,
                 links: values.links
             });
+            setLoading(false);
+            if (values.nodes.length !== 0) setIsNode(true);
             return 'tableTransaction';
         }).catch(error => {
             console.log("error at table", error.message);
@@ -99,6 +104,8 @@ const Account = () => {
                 nodes: values.nodes,
                 links: values.links
             });
+            if (values.nodes.length !== 0) setIsNode(true);
+            setLoading(false);
             return 'graphNode';
         }).catch(error => {
             console.log("error at graph node", error.message);
@@ -167,7 +174,7 @@ const Account = () => {
     }
 
     // Can connect to database
-    if ((node && !loading) || loading) {
+    if ((isNode && !loading) || loading) {
         return (
             <>
                 {summary && node ? <UserInfo summary={summary} node={node} /> : <UserInfoSke />}
