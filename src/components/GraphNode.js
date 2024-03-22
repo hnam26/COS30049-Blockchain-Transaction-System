@@ -45,7 +45,7 @@ const GraphNode = ({ props: { nodes, links } }) => {
             const response = await axios.get(`http://localhost:5000/addresses/${id}?all=true`);
             var nodes = [...graphData.nodes];
             var links = [...graphData.links];
-            const values = ProcessGraphData(response.data, [...nodes], [...links]);
+            const values = ProcessGraphData(response.data.records, [...nodes], [...links]);
             if (values.nodes.length === nodes.length && values.links.length === links.length) {
             } else {
                 setGraphData({
