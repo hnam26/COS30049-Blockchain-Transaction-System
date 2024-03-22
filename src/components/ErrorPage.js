@@ -9,6 +9,8 @@ const Error = ({ props }) => {
   if (error === '404') {
     return (
       // Return JSX for 404 error page
+
+      // Source: https://codepen.io/genarocolusso/pen/XWbGMLp
       <div className="main-error-page">
         <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="470" height="290" viewBox="0 0 470 290">
           <defs>
@@ -66,6 +68,8 @@ const Error = ({ props }) => {
   } else if (error === '500') {
     return (
       // Return JSX for 500 error page
+
+      // Source: https://codepen.io/genarocolusso/pen/gOpyYdV
       <div className="main-error-page">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -411,8 +415,12 @@ const Error = ({ props }) => {
       </div>
 
     );
+    // If the error code is network error
   } else if (error === 'Network Error') {
     return (
+      // Return JSX for network error page
+
+      // Source: https://codepen.io/dana-rocha/pen/RwaLpob
     <div className="err-network">
     <svg
       id="noConnection"
@@ -502,11 +510,11 @@ const Error = ({ props }) => {
     </div>
     <div className="shadow"></div>
     
-  <h1 className="error-title">
+    <h1 className="error-title">
           Network error
     </h1>
     <h2 className="error-subtitle">
-    Well, this is awkward. It appears our website decided to take a quick break.
+      Well, this is awkward. It appears our website decided to take a quick break.
     </h2>
    </div>
    )
