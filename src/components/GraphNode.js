@@ -16,7 +16,7 @@ const GraphNode = ({ props: { nodes, links } }) => {
 
     const containerRef = useRef();
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-    
+
     //  Update dimensions
     useEffect(() => {
         const updateDimensions = () => {
@@ -62,6 +62,11 @@ const GraphNode = ({ props: { nodes, links } }) => {
         }
     };
 
+    const covertToTime = (timestamp) => {
+        var time = new Date(timestamp * 1000);
+        return `${time.getDate()}/${time.getMonth() + 1}/${time.getFullYear()} ${time.toLocaleTimeString()}`;
+    };
+
     // Update graph data
     useEffect(() => {
         //Important to create deep copy
@@ -78,7 +83,7 @@ const GraphNode = ({ props: { nodes, links } }) => {
     function displayLinkData(link) {
         if (link) {
             document.querySelector('.display').innerHTML = `
-                <h3>Relationship</h3>
+            <h3> Relationship </h3>
                 <div className="display-change">
                     <div class="display-group">
                         <div>From</div>
@@ -98,18 +103,18 @@ const GraphNode = ({ props: { nodes, links } }) => {
                     </div>
                     <div class="display-group">
                         <div>Date</div>
-                        <div>${new Date(link.block_timestamp * 1000).toLocaleDateString()} ${new Date(link.block_timestamp * 1000).toLocaleTimeString()}</div>
+                        <div>${covertToTime(link.block_timestamp)}</div>
                     </div>
                     <div class="display-group">
                         <div>Block number</div>
                         <div>${link.block_number}</div>
                     </div>
-                 </div >
-                `;
+                </div >
+        `;
 
         } else {
             document.querySelector('.display').innerHTML = `
-                <h3>Relationship</h3>
+            <h3> Relationship </h3>
                 <div className="display-change">
                     <div class="display-group">
                         <div>From</div>
@@ -136,11 +141,11 @@ const GraphNode = ({ props: { nodes, links } }) => {
                         <div> </div>
                     </div>
                 </div>
-            `;
+        `;
         }
     }
     // Render error message
-    if (error) return `Error: ${error}`;
+    if (error) return `Error: ${error} `;
     // Render graph node
     return (
         <div className='graphNode'>
@@ -208,7 +213,7 @@ const GraphNode = ({ props: { nodes, links } }) => {
                         let tooltipContent = "<div class='label'>";
                         tooltipContent += "<span class='label'>Transaction ID: " + link.transaction_index + "</span>";
                         tooltipContent += "<span class='label'>Value: " + link.value + "</span>";
-                        tooltipContent += "<span class='label'>Date: " + new Date(link.block_timestamp * 1000).toLocaleDateString() + " " + new Date(link.block_timestamp * 1000).toLocaleTimeString() + "</span>";
+                        tooltipContent += "<span class='label'>Date: " + covertToTime(link.block_timestamp) + "</span>";
                         tooltipContent += "<span class='label'>Block number: " + link.block_number + "</span>";
                         tooltipContent += "</div>";
                         return tooltipContent;
@@ -263,4 +268,4 @@ const GraphNode = ({ props: { nodes, links } }) => {
     );
 };
 
-export default GraphNode;
+export default GraphNode;;
