@@ -3,8 +3,8 @@ import avatar from "../assets/images/avatar.png";
 import "../styles/user-info.css";
 const UserInfo = ({ summary, node }) => {
     const [showPopup, setShowPopup] = useState(false);
-    const nodeId = node.properties.addressId;
-    const type = node.properties.type;
+    const nodeId = node.addressId;
+    const type = node.type;
 
 
     const shortenNodeId = (nodeId) => {

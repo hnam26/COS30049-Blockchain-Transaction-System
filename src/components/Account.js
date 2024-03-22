@@ -11,7 +11,7 @@ import GraphNode from "./GraphNode";
 import ReactPaginate from 'react-paginate';
 import Error from "./ErrorPage";
 import axios from 'axios';
-import { ProcessGraphData } from "../data/Process";
+// import { ProcessGraphData } from "../data/Process";
 import "../styles/account.css";
 
 const Account = () => {
@@ -51,7 +51,7 @@ const Account = () => {
 
         // Fetch total page count
         const fetchTotalPage = axios.get(`http://localhost:5000/addresses/${id}?totalPageCount=true`).then(response => {
-            let pageTotal = Math.floor(+response.data.pageTotal / +pageStep) + 1;
+            let pageTotal = +response.data.pageTotal;
             setTotalPage(+pageTotal);
             return 'totalPage';
         }).catch(error => {
@@ -61,13 +61,13 @@ const Account = () => {
 
         // Fetch table transaction data
         const fetchTableTransaction = axios.get(`http://localhost:5000/addresses/${id}?pages=${1}`).then(response => {
-            const values = ProcessGraphData(response.data);
+            // const values = ProcessGraphData(response.data);
             setTabelData({
-                nodes: values.nodes,
-                links: values.links
+                nodes: response.data.nodes,
+                links: response.data.links
             });
             setLoading(false);
-            if (values.nodes.length !== 0) setIsNode(true);
+            if (response.data.nodes.length !== 0) setIsNode(true);
             return 'tableTransaction';
         }).catch(error => {
             console.log("error at table", error.message);
@@ -99,12 +99,12 @@ const Account = () => {
 
         // Fetch graph node data (all records of that wallet id)
         const fetchGraphNode = axios.get(`http://localhost:5000/addresses/${id}?all=true`).then(response => {
-            const values = ProcessGraphData(response.data);
+            // const values = ProcessGraphData(response.data);
             setGraphData({
-                nodes: values.nodes,
-                links: values.links
+                nodes: response.data.nodes,
+                links: response.data.links
             });
-            if (values.nodes.length !== 0) setIsNode(true);
+            if (response.data.nodes.length !== 0) setIsNode(true);
             setLoading(false);
             return 'graphNode';
         }).catch(error => {
@@ -144,10 +144,10 @@ const Account = () => {
         } else {
             // Fetch api for table transaction
             axios.get(`http://localhost:5000/addresses/${id}?pages=${pageNumber}`).then(response => {
-                const values = ProcessGraphData(response.data);
+                // const values = ProcessGraphData(response.data);
                 setTabelData({
-                    nodes: values.nodes,
-                    links: values.links
+                    nodes: response.data.nodes,
+                    links: response.data.links
                 });
                 setLoading(false);
             }).catch(error => {
