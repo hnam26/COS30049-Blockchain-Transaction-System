@@ -42,7 +42,7 @@ const Account = () => {
             const node = response.data;
             setNode(node);
             setLoading(false);
-            if (node !== null) setIsNode(true);
+            if (node) setIsNode(true);
             return 'node';
         }).catch(error => {
             console.log("error at node", error.message);
@@ -172,6 +172,7 @@ const Account = () => {
         }
 
     }
+    console.log(isNode);
 
     // Can connect to database
     if ((isNode && !loading) || loading) {
