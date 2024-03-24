@@ -175,9 +175,9 @@ const BarChart = ({ summary }) => {
 
             </div >
             <div className="divBut">
-                <button onClick={() => setDayTime(7)}>7 days</button>
-                <button onClick={() => setDayTime(28)} >4 weeks</button>
-                <button onClick={() => setDayTime(30 * 12)}>12 months</button>
+                <button onClick={() => setDayTime(7)}>Week</button>
+                <button onClick={() => setDayTime(28)} >Month</button>
+                <button onClick={() => setDayTime(30 * 12)}>Year</button>
             </div>
         </>
     );
