@@ -10,7 +10,7 @@ const UserInfo = ({ summary, node }) => {
     const shortenNodeId = (nodeId) => {
         const firstThreeLetters = nodeId.slice(2, 5);
         const lastThreeLetters = nodeId.slice(-3);
-        return firstThreeLetters + lastThreeLetters;
+        return firstThreeLetters + "-" + lastThreeLetters;
     };
 
     const handleCopyToClipboard = () => {

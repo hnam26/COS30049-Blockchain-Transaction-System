@@ -11,14 +11,12 @@ import GraphNode from "./GraphNode";
 import ReactPaginate from 'react-paginate';
 import Error from "./ErrorPage";
 import axios from 'axios';
-// import { ProcessGraphData } from "../data/Process";
 import "../styles/account.css";
 
 const Account = () => {
     const params = useParams();
     const id = params.id;
     // Constants and state variables initialization
-    const pageStep = 10; // Number of items per page
     const [node, setNode] = useState(null); // State for storing node data
     const [graphData, setGraphData] = useState(null); // State for storing graph data
     const [tableData, setTabelData] = useState(null); // State for storing table data
