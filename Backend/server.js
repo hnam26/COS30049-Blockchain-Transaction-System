@@ -1,5 +1,6 @@
 // Import necessary modules
 const express = require('express');
+const ProcessData = require('./ProcessData');
 const path = require('path');
 const neo4j = require('neo4j-driver');
 
@@ -51,7 +52,7 @@ async function fetchPages(session, id, pages, res) {
     const limit = 10;
     const skip = (pages - 1) * limit;
     const result = await session.run(
-        'MATCH (n {addressId: $id})-[r]-(m) RETURN n,m,r SKIP $skip LIMIT $limit',
+        'MATCH (n {addressId: $id})-[r]-(m) RETURN n,m,r ORDER BY r.block_timestamp DESC SKIP $skip LIMIT $limit',
         { id: id, skip: neo4j.int(skip), limit: neo4j.int(limit) }
     );
     var records = [];
@@ -65,7 +66,8 @@ async function fetchPages(session, id, pages, res) {
             r: relationship,
         });
     });
-    res.send(records);
+    const { nodes, links } = ProcessData(records);
+    res.send({ records: records, nodes: nodes, links: links });
 }
 
 // Function to fetch sent transactions
@@ -119,8 +121,10 @@ async function fetchNode(session, id, res) {
     try {
         const result = await session.run('MATCH (n {addressId: $id}) RETURN  n', { id: id });
         if (result.records.length != 0) {
-            const n = result.records[0].get('n');
-            res.send(n);
+            // const n = result.records[0].get('n');
+            const type = result.records[0].get('n').properties.type;
+            const addressId = result.records[0].get('n').properties.addressId;
+            res.send({ type: type, addressId: addressId });
         }
         else {
             res.send(null);
@@ -135,7 +139,7 @@ async function fetchTotalPageCount(session, id, res) {
     try {
         const result = await session.run('MATCH (n {addressId: $id})-[r]-(m) RETURN COUNT( r) AS count_r', { id: id });
         const pageTotal = result.records[0].get('count_r').toNumber();
-        res.send({ pageTotal: pageTotal });
+        res.send({ pageTotal: Math.floor(pageTotal / 10) + 1 });
     } catch (error) {
         res.status(500).send(error);
     }
@@ -144,7 +148,7 @@ async function fetchTotalPageCount(session, id, res) {
 // Function to fetch all records
 async function fetchAll(session, id, res) {
     try {
-        const result = await session.run('MATCH (n {addressId: $id})-[r]-(m) RETURN  n,m,r', { id: id });
+        const result = await session.run('MATCH (n {addressId: $id})-[r]-(m) RETURN n,m,r ORDER BY r.block_timestamp DESC', { id: id });
         var records = [];
         result.records.forEach(r => {
             const sent = r.get('n');
@@ -156,8 +160,10 @@ async function fetchAll(session, id, res) {
                 r: relationship,
             });
         });
-        res.send(records);
+        const { nodes, links } = ProcessData(records);
+        res.send({ records: records, nodes: nodes, links: links });
     } catch (error) {
+        console.log(error);
         res.status(500).send(error);
     }
 }

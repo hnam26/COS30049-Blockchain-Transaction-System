@@ -11,7 +11,7 @@ import GraphNode from "./GraphNode";
 import ReactPaginate from 'react-paginate';
 import Error from "./ErrorPage";
 import axios from 'axios';
-import { ProcessGraphData } from "../data/Process";
+// import { ProcessGraphData } from "../data/Process";
 import "../styles/account.css";
 
 const Account = () => {
@@ -26,10 +26,12 @@ const Account = () => {
     const [loading, setLoading] = useState(true); // State for loading status
     const [error, setError] = useState(null); // State for error handling
     const [totalPage, setTotalPage] = useState(null); // State for total number of pages
+    const [isNode, setIsNode] = useState(false);
     const [showWalletContent, setShowWalletContent] = useState(true); // State for toggling wallet content
     useEffect(() => {
         // Reset states and set loading status when component mounts or 'id' changes
         setLoading(true);
+        setIsNode(false);
         setNode(null);
         setSummary(null);
         setTabelData(null);
@@ -40,6 +42,7 @@ const Account = () => {
             const node = response.data;
             setNode(node);
             setLoading(false);
+            if (node !== null) setIsNode(true);
             return 'node';
         }).catch(error => {
             console.log("error at node", error.message);
@@ -48,7 +51,7 @@ const Account = () => {
 
         // Fetch total page count
         const fetchTotalPage = axios.get(`http://localhost:5000/addresses/${id}?totalPageCount=true`).then(response => {
-            let pageTotal = Math.floor(+response.data.pageTotal / +pageStep) + 1;
+            let pageTotal = +response.data.pageTotal;
             setTotalPage(+pageTotal);
             return 'totalPage';
         }).catch(error => {
@@ -58,11 +61,13 @@ const Account = () => {
 
         // Fetch table transaction data
         const fetchTableTransaction = axios.get(`http://localhost:5000/addresses/${id}?pages=${1}`).then(response => {
-            const values = ProcessGraphData(response.data);
+            // const values = ProcessGraphData(response.data);
             setTabelData({
-                nodes: values.nodes,
-                links: values.links
+                nodes: response.data.nodes,
+                links: response.data.links
             });
+            setLoading(false);
+            if (response.data.nodes.length !== 0) setIsNode(true);
             return 'tableTransaction';
         }).catch(error => {
             console.log("error at table", error.message);
@@ -94,11 +99,13 @@ const Account = () => {
 
         // Fetch graph node data (all records of that wallet id)
         const fetchGraphNode = axios.get(`http://localhost:5000/addresses/${id}?all=true`).then(response => {
-            const values = ProcessGraphData(response.data);
+            // const values = ProcessGraphData(response.data);
             setGraphData({
-                nodes: values.nodes,
-                links: values.links
+                nodes: response.data.nodes,
+                links: response.data.links
             });
+            if (response.data.nodes.length !== 0) setIsNode(true);
+            setLoading(false);
             return 'graphNode';
         }).catch(error => {
             console.log("error at graph node", error.message);
@@ -137,10 +144,10 @@ const Account = () => {
         } else {
             // Fetch api for table transaction
             axios.get(`http://localhost:5000/addresses/${id}?pages=${pageNumber}`).then(response => {
-                const values = ProcessGraphData(response.data);
+                // const values = ProcessGraphData(response.data);
                 setTabelData({
-                    nodes: values.nodes,
-                    links: values.links
+                    nodes: response.data.nodes,
+                    links: response.data.links
                 });
                 setLoading(false);
             }).catch(error => {
@@ -160,12 +167,14 @@ const Account = () => {
         if (error?.response?.status === 500) {
             return (<Error props={{ status: "500" }} />);
         }
-        return (<Error props={{ status: "500" }} />);
+        if (error?.response?.status === "Network Error") {
+            return (<Error props={{ status: "Network Error" }} />);
+        }
 
     }
 
     // Can connect to database
-    if ((node && !loading) || loading) {
+    if ((isNode && !loading) || loading) {
         return (
             <>
                 {summary && node ? <UserInfo summary={summary} node={node} /> : <UserInfoSke />}
