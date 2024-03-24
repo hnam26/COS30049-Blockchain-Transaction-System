@@ -18,7 +18,6 @@ const Account = () => {
     const params = useParams();
     const id = params.id;
     // Constants and state variables initialization
-    const pageStep = 10; // Number of items per page
     const [node, setNode] = useState(null); // State for storing node data
     const [graphData, setGraphData] = useState(null); // State for storing graph data
     const [tableData, setTabelData] = useState(null); // State for storing table data
