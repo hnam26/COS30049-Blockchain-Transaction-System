@@ -5,6 +5,9 @@
 
 This is the project applying Blockchain technology to build a robust system that guarantees a secure connection and facilitates transparent transactions between buyers and sellers
 
+
+![image](https://github.com/user-attachments/assets/c0d52361-891a-4fef-8141-3f90e76b336c)
+
 ## Prerequisites
 
 Ensure you have the following installed:
@@ -38,15 +41,3 @@ npm start
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
-
-## Contributing
-
-Provide information on how others can contribute to the project.
-
-## License
-
-Specify the license for your project.
-
-```
-
-Replace "Project Name," "Description," and other placeholders with your specific project details. This template includes sections for prerequisites, installation, usage, contributing, and licensing.
