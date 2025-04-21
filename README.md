@@ -3,7 +3,7 @@
 
 ## Description
 
-This is the project of NST team
+This is the project applying Blockchain technology to build a robust system that guarantees a secure connection and facilitates transparent transactions between buyers and sellers
 
 ## Prerequisites
 
